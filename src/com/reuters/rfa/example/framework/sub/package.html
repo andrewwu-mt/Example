@@ -1,0 +1,62 @@
+<body>
+	<p>Contains a framework for a consumer/subscriber application. SubAppContext is the main component of this framework. It performs tasks that most consumer/subscriber needs to do before it can consume/subscribe data.</p>  
+
+	Configurable parameters are
+	<ul>
+		<li>
+		<b>debug</b> - enable debug tracing. The default is false.
+		</li>
+		<li>
+		<b>serviceName</b> - service to request. The default is "".
+		</li>
+		<li>
+		<b>runTime</b> - how long the application should run before exiting (in seconds). The default is -1 (infinite).
+		</li>
+		<li>
+		<b>session</b> - session name to use. The default is "myNamespace::mySession".
+		</li>
+		<li>
+		<b>user</b> - DACS username for login. The default is the value from "user.name" property or "guest".
+		</li>
+		<li>
+		<b>position</b> - DACS position for login. The default is local host or "1.1.1.1/net". 
+		</li>
+		<li>
+		<b>application</b> - DACS application ID for login. The default is "256".
+		</li>
+		<li>
+		<b>fileDictionary</b> - load dictionary from file. The default is false.
+		</li>
+		<li>
+		<b>enumType</b> - enumtype.def filename. The default is "/var/triarch/enumtype.def".
+		</li>
+		<li>
+		<b>type</b> - type of subscriber connection. It can be either "OMM" or "MarketData". The default is "OMM".
+		</li>
+
+		<p>	
+		The following parameter can be used if "type" is "OMM".
+		<ul>
+			<li>
+			<b>rdmFieldDictionary</b> - RDMFieldDictionary filename. The default is "/var/triarch/RDMFieldDictionary".
+			</li>
+			<li>
+			<b>requestPARSupport</b> - Encode login request with "SupportPauseResume = 1"  . The default is "True".
+			</li>			
+		</ul>
+		</p>
+
+		<p>
+		The following parameters can be used if "type" is "MarketData".
+		<ul>
+			<li>
+			<b>mounttpi</b> - use TokenizedPrincipalIdentity for Session. The default is false.
+			</li>
+			<li>
+			<b>appendixaFilename</b> - appendix_a filename. The default is "/var/triarch/appendix_a".
+			</li>
+		</ul>
+		</p>
+	</ul>
+</body>
+

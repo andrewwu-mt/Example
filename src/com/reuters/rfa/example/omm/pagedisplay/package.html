@@ -1,0 +1,50 @@
+<body>
+<p>
+The PageDisplay is a GUI application that uses RFA to retrieve pages which update in real time from  
+OMM Level 1 Data(MarketPrice). This is a live, interactive page display, it allows a user to input the name of an instrument (Reuter Instrument Code or RIC) 
+to retrieve. The display is updated as updates are received for the real-time record or until the user enters another RIC name. 
+</p>
+<img src="{@docRoot}/../../portal/images/pagedisplay.jpg">
+<p>
+This application uses the {@linkplain com.reuters.rfa.example.framework.sub framework.sub} for context initializationb and cleanup.
+</p>
+
+<p><b>The following basic sequence of events will take place before the page is displayed to the user: </b></p>
+<ul>
+<li>The {@linkplain com.reuters.rfa.example.omm.pagedisplay.PagePanel PagePanel} captures an action performed event from the user input region, reading the RIC name that was input by the user.</li>
+<li>It obtains the (Page) from the {@linkplain com.reuters.rfa.example.omm.pagedisplay.PageClient PageClient} for the inputted RIC name<li>
+<li>PageClient registers to receive events from the page, then waits for the page to become fully populated ({@linkplain com.reuters.rfa.example.omm.pagedisplay.PageClient PageClient#hasData()} == true).
+<li>When the page is fully populated, the PagePanel passes the page to the {@linkplain com.reuters.rfa.example.omm.pagedisplay.PageCanvas PageCanvas} for display.</li>
+<li>As update events are received by the PageClient, the {@linkplain com.reuters.rfa.ansipage.PageUpdate PageUpdate} are forwarded to the PageCanvas. </li>
+<li>The fade thread redisplays the PageUpdate every 250 ms (for blinking) over a period of 2 seconds.  After 2 seconds, the region is redisplayed with the regular attributes. </li>
+<li>As other events are received from the page, they are displayed in the status bar</li>
+<li>This sequence starts over when the user inputs a new RIC name</li>
+</ul>
+<p><b>The following command line configuration parameters are currently available.</b>
+<ul>
+<li><b>help</b> - Display help information and exit.  The default is false.
+<li><b>session</b> - Consumer session.  The default is myNamespace::mySession.
+<li><b>serviceName</b> - Service name to request the preload items. The default is "BRIDGE_PAGES".
+<li><b>fontSize</b> - Font size to use in the display. The default is 12.</li>
+<li><b>rows</b> - Number of rows in the display . The default is 25.</li>
+<li><b>cols</b> - Number of columns in the display. The default is 80.</li>
+<li><b>user</b> - DACS username for login. The default is the value from "user.name" property or "guest".</li>
+<li><b>position</b> - DACS position for login. The default is local host or "1.1.1.1/net".</li>
+<li><b>application</b> - DACS application ID for login. The default is "256".</li>
+<li><b>fileDictionary</b> - load dictionary from file. The default is false.</li>
+<li><b>enumType</b> - enumtype.def filename. The default is "/var/triarch/enumtype.def".</li>
+<li><b>debug</b> - enable debug tracing. The default is false.</li>
+</ul>
+
+<p>The following parameter is also used.
+<ul>
+	<li><b>rdmFieldDictionary</b> - RDMFieldDictionary filename. The default is "/var/triarch/RDMFieldDictionary".
+	</li>
+</ul>
+</p>
+
+<p><b>The PageDisplay application can be run with the following commands:</b></p>
+<li>To retrieve real-time page using OMM consumer model
+<br>java com.reuters.rfa.example.omm.pagedisplay.PageDisplay -session myNamespace::rsslSession </li>
+</p>
+</body>

@@ -1,0 +1,68 @@
+<body>
+This example aims to demonstrate how to publish
+Reuters Domain Model data using the Open Message Model. The <b>DomainServer</b> is the main class of provider application which uses 
+<b><font face="Courier New" size="2">PubAppContext</font></b>, the provide framework, 
+to publish the Open Message Model data.
+<p>
+Currently, this application provides Logins, Service Directories,
+and Dictionaries data as default. It can also provide Market Price, Market By Order, Market By Price, 
+Market Maker, Symbol List data.  
+If needed, you can easily extend the example to provide other types of data.
+</p>
+<p>This application: </p>
+ <ul>
+  <li>Reads the input parameter from the command line argument.</li>
+  <li>Provides OMM data for basic domains such as:
+   Login, Directory and Dictionary by using <b>
+	<font face="Courier New" size="2">{@linkplain com.reuters.rfa.example.framework.prov ProviderFramework}</font></b>.</li>
+  <li>Provides the other domains based on commandline argument such as:
+   Market Price, Market By Order, Market By Price, Market Maker, and Symbol List</li>
+ </ul>
+ 
+<p>The <b>DomainServer</b> application currently supports the following command line parameters.</p>
+ <ul>
+  <li><b><font face="Courier New" size="2">debug</font></b>: Enables debug 
+	tracing. The default is <font face="Courier New" size="2"><b>false</b></font>.</li>
+  <li><b><font face="Courier New" size="2">provSession</font></b>: Sets the 
+	session name to use. The default is <font face="Courier New" size="2"><b>myNamespace::provSession</b></font>.</li>
+  <li><b><font face="Courier New" size="2">rdmFieldDictionary</font></b>: Sets 
+	the RDMFieldDictionary path and filename. The default is
+	<font face="Courier New" size="2"><b>/var/triarch/RDMFieldDictionary</b></font>.</li>
+  <li><b><font face="Courier New" size="2">enumType</font></b>: Sets the <b>
+	enumtype.def</b> filename. The default is <font face="Courier New" size="2">
+	<b>/var/triarch/enumtype.def</b></font>.</li>
+  <li><b><font face="Courier New" size="2">listenenerName</font></b>: Sets the 
+	listener name for the session. The default is &quot;&quot;.</li>
+  <li><b><font face="Courier New" size="2">acceptSessions</font></b>: Sets 
+	whether to accept all sessions. The default is <b>
+	<font face="Courier New" size="2">true</font></b>.</li>
+  <li><b><font face="Courier New" size="2">vendor</font></b>: Sets the vendor's name. 
+	The default is <font face="Courier New" size="2"><b>RFAExample</b></font>.</li>
+  <li><b><font face="Courier New" size="2">pubServiceName</font></b>: Sets the 
+	name of the service used by provider. The default is
+	<font face="Courier New" size="2"><b>MY_SERVICE</b></font>.</li>
+  <li><b><font face="Courier New" size="2">isSource</font></b>: Sets whether 
+	this is the original source of data. The default is
+	<font face="Courier New" size="2"><b>false</b></font>.</li>
+  <li><b><font face="Courier New" size="2">runTime</font></b>: Sets the duration 
+	(in seconds) for which the application should run before exiting. The 
+	default is <font face="Courier New" size="2"><b>-1</b></font>.</li>
+  <li><b><font face="Courier New" size="2">mmt</font></b>: List of comma-delimited domains supported by the server. 
+	The default is <font face="Courier New" size="2"><b>MARKET_PRICE,MARKET_BY_ORDER,MARKET_BY_PRICE,MARKET_MAKER,SYMBOL_LIST</b></font>.</li>
+  <li><b><font face="Courier New" size="2">&lt;domain name&gt;_updateInterval example:MARKET_BY_ORDER_updateInterval</font></b>: 
+	Sets the interval (in seconds) between each update message. The default is
+	<font face="Courier New" size="2"><b>3</b></font>.</li>
+  <li><b><font face="Courier New" size="2">&lt;domain name&gt;_encodeDataDef  example:MARKET_BY_ORDER_encodeDataDef</font></b>: Enables 
+	the option to optimize bandwidth by using <font face="Courier New" size="2">
+	<b>DataDefinitions</b></font>. The default is
+	<font face="Courier New" size="2"><b>true</b></font>.</li>
+  <li><b><font face="Courier New" size="2">SYMBOL_LIST_totalSymbols</font></b>: 
+	Specifies the total number of symbols in the Symbol List. The default is
+	<font face="Courier New" size="2"><b>25</b></font>.</li>	
+</ul>
+
+<p>The example can be run as an application with the following commands:</p>
+
+&nbsp;&nbsp;&nbsp; <b><font size="2" face="Courier New">java com.reuters.rfa.example.domainServer.DomainServer -provSession myNameSpace::myProviderSession
+-mmt MARKET_BY_ORDER -pubServiceName DIRECT_FEED </font></b>
+</body>

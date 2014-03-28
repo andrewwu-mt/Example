@@ -1,0 +1,102 @@
+<body>
+<p>
+The QuoteList is a GUI application that uses RFA to retrieve several fields each
+from a list of instruments (real-time OMM level 1 data) which update in real time.
+The application uses RFA's OMM Consumer model to retrieve level 1 data (MarketPrice)
+from the back-end server infrastructure. </p>
+
+<p>The QuoteList can also be run as applet application. The applet script is quotelist.html file in <a href="{@docRoot}/../../../Examples/applet/">/Examples/applet/ folder</a>.
+More details see {@linkplain com.reuters.rfa.example.applet applet example package}. 
+</p>
+
+<p>The user selects which RICs and fields to display in the table. 
+The data is displayed as lists of quotes and their associated field values. 
+The display is updated in real time as data and state change events are received for 
+each record and field. 
+</p>
+
+<br><b>GUI:</b>
+<br><img src="{@docRoot}/../../portal/images/quotelist.jpg">
+<br><br><b>Applet:</b>
+<br><img src="{@docRoot}/../../portal/images/quotelistApplet.jpg">
+<br>
+
+<p>
+This application uses the {@linkplain com.reuters.rfa.example.framework.sub framework.sub} for context initialization.
+</p>
+
+<p><b>The QuoteList application consists of several distinct components</b>
+<ul>
+<li>The FieldSelector, which allows the user to select which fields should be retrieved for a record.
+It also lets the user add fields to a default list individually or by specifying a record that contains all of the fields to ask.</li>
+<li>The Status interface and LoggedStatusBar, which display and store status from services and item events.</li>
+<li>ServiceSelector, which lets the user select from available record services. 
+The table rendering components, RecordTableModel, RecordRenderer, and FieldRenderer, which display data in a table.</li>
+<li>The QuoteList and QuoteListDisplay, which initialize the example and bring the GUI components together.</li>
+</ul>
+</p>
+
+<p><b>For GUI, The following command line configuration parameters are currently available.</b>
+<ul>
+<li><b>help</b> - Display help information and exit.  The default is false.
+<li><b>session</b> - Consumer session.  The default is myNamespace::mySession.
+<li><b>serviceName</b> - Service name to request the preload items. The default is "".  If this is 
+   set to a service name, that service name must be available before requests are allowed.  If this
+   is not specified, and itemNames is specified, then the items will be requested from the first
+   service in the directory.
+<li><b>itemNames</b> - List of items to preload separated by ','.  The default is an empty String.
+<li><b>fieldNames</b> - List of field names to display separated by ','.  The default is "DSPLY_NAME,TRDPRC_1,NETCHNG_1,ACVOL_1". </li>
+<li><b>fontSize</b> - Font size to use in the display.  The default is 10.
+<li><b>font</b> - Font name or logical font name.  The default is the logical font name "Dialog".
+<li><b>user</b> - DACS username for login. The default is the value from "user.name" property or "guest".</li>
+<li><b>position</b> - DACS position for login. The default is local host or "1.1.1.1/net".</li>
+<li><b>application</b> - DACS application ID for login. The default is "256".</li>
+<li><b>fileDictionary</b> - load dictionary from file. The default is false.</li>
+<li><b>enumType</b> - enumtype.def filename. The default is "/var/triarch/enumtype.def".</li>
+<li><b>debug</b> - enable debug tracing. The default is false.</li>
+</ul>
+
+<p>The following parameter can be used if "type" is "OMM".
+<ul>
+	<li><b>rdmFieldDictionary</b> - RDMFieldDictionary filename. The default is "/var/triarch/RDMFieldDictionary".
+	</li>
+</ul>
+</p>
+
+<p><b>For applet, The following configuration parameters are currently available.</b><br>
+You can change these parameters by editing the quotelist.html file in <a href="{@docRoot}/../../../Examples/applet/">/Examples/applet folder</a>.
+<ul>
+<li><b>session</b> - Consumer session.  The default is myNamespace::mySession.
+<li><b>serviceName</b> - Service name to request the preload items. The default is "".  If this is 
+   set to a service name, that service name must be available before requests are allowed.  If this
+   is not specified, and itemNames is specified, then the items will be requested from the first
+   service in the directory.
+<li><b>itemNames</b> - List of items to preload separated by ','.  The default is an empty String.
+<li><b>fieldNames</b> - List of field names to display separated by ','.  The default is "DSPLY_NAME,TRDPRC_1,NETCHNG_1,ACVOL_1". </li>
+<li><b>fontSize</b> - Font size to use in the display.  The default is 10.
+<li><b>font</b> - Font name or logical font name.  The default is the logical font name "Dialog".
+<li><b>user</b> - DACS username for login. The default is the value from "user.name" property or "guest".</li>
+<li><b>position</b> - DACS position for login. The default is local host or "1.1.1.1/net".</li>
+<li><b>application</b> - DACS application ID for login. The default is "256".</li>
+<li><b>debug</b> - enable debug tracing. The default is false.</li>
+<li><b>configDb</b> - Parameters for configure a database of configuration used to initialize the RFA. 
+ <br>This paremeter is in the following format and each config saparated by pipe &quot;|&quot;<br>
+            &nbsp;&nbsp;&lt;config1&gt;=&lt;value1&gt; |<br>
+            &nbsp;&nbsp;&lt;config2&gt;=&lt;value2&gt; |<br>
+            &nbsp;&nbsp;&lt;config3&gt;=&lt;value3&gt;<br>             
+ This config and value are imported to ConfigDb with addVariable method.<br>
+ See <a href="{@docRoot}/../../../Docs/refman/rfajava/com/reuters/rfa/config/ConfigDb.html" target="_blank">ConfigDb</a>
+</ul>
+
+<p><b>The QuoteList application can be run with the following commands:</b></p>
+<ul>
+<li>To retrieve MarketPrice items (using OMM consumer model)
+<br>java com.reuters.rfa.example.quotelist.QuoteList -session myNamespace::rsslSession -itemName "RTR.L, IBM.N" -serviceName DIRECT_FEED
+</li>
+<li>To run QuoteList as applet application
+<br>Before running, an applet Jar need to be build. See {@linkplain com.reuters.rfa.example.applet applet}.
+<br>Click <a href="{@docRoot}/../../../Examples/applet/quotelist.html" target="_blank">quotelist.html</a> to run with default parameters.
+</li>
+</ul>
+<p>
+</body>

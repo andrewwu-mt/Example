@@ -1,0 +1,66 @@
+<body>
+<p>The <b>DictionaryDemo</b> application demonstrates how to download dictionaries from 
+the network using RFA's OMM Consumer model. 
+
+It can connect to an RFA OMMProvider / P2PS / RDFD using an RSSL connection that provides 
+the dictionary domain.</p>
+
+The <b>DictionaryDemo</b> application:<ol>
+	<li>Registers for login and processes the login response.<li>Registers for directory to get a list of dictionaries available for each service.</li>
+	<li>Downloads full dictionaries from the network. <br><b>Note:</b> This application downloads dictionaries 
+	only from the first available service.</li>
+	<li>Provides an option to read dictionary from file. 
+  	<li>If dictionaries from local files are available, it requests dictionaries 
+  	<b><font face="Courier New" size="2">{@linkplain com.reuters.rfa.rdm.RDMDictionary.Filter#INFO info}</font></b> from 
+	the network and compares the version and ID.</li>
+   	<ul>
+		<li>If the dictionary version or ID is different, 
+   		it downloads <b><font face="Courier New" size="2">{@linkplain com.reuters.rfa.rdm.RDMDictionary.Filter#NORMAL full}</font></b> 
+		the dictionary from the network.</li>
+		<li>If the dictionary version and ID are identical, it reads the dictionary from file.
+		<br>For example, if the field dictionary from the network and the local file have the same version and ID, 
+   		but the enumeration dictionary versions are different, the application will read the field dictionary
+   		from file and download the enumeration dictionary from the network.
+		<li>If both field and enumeration dictionaries from network and local files have the same version and ID, 
+   		<b>DictionaryDemo</b> uses local files and does not display output.</li>
+	</ul>
+	<li>Display or dump to files after receiving the field and enumeration dictionaries from 
+	the network.</li>
+	<li>Clean up and exit the program.</ol>
+
+<p>The <b>DictionaryDemo</b> application currently supports the following command line options.</p>
+<ul>
+ <li><b><font face="Courier New" size="2">session</font></b>: Sets the name of 
+	the consumer session to acquire.
+ Its connection list should include at least one RSSL connection. By default, <b>DictionaryDemo</b> 
+	uses <b>myNamespace::mySession</b>.</li>
+ <li><b><font face="Courier New" size="2">user</font></b>: Sets the DACS 
+	username for Login. The default value is the value of <b>user.name</b> 
+	system property.</li>
+ <li><b><font face="Courier New" size="2">position</font></b>: Sets the DACS position 
+	for Login. By default, <b>DictionaryDemo</b> uses <b>IP address/hostname</b>.</li>
+ <li><b><font face="Courier New" size="2">application</font></b>: Sets the DACS 
+	application ID for Login. By default, <b>DictionaryDemo</b> uses <b>256</b>.</li>
+ <li><b><font face="Courier New" size="2">rdmFieldDictionary</font></b>: (Optional) 
+	Specifies the RDMFieldDictionary path and filename. By default, <b>DictionaryDemo</b> 
+	uses <b>/var/triarch/RDMFieldDictionary</b>.</li>
+ <li><b><font face="Courier New" size="2">enumType</font></b>: (Optional) Specifies 
+	the <b>enumtype.def</b> path and filename. By default, <b>DictionaryDemo</b> 
+	uses <b>/var/triarch/enumtype.def</b>.</li>
+ <li><b><font face="Courier New" size="2">outputDir</font></b>: Name of directory to store dump files of dictionaries from network. 
+	By default, <b>DictionaryDemo</b> uses <b>stdout</b>.</li>
+</ul>
+
+<p>You can use the <b>DictionaryDemo</b> example in the following ways: </p>
+
+<ul>
+	<li>Download dictionaries from the network and print to stdout: <br><b>
+	<font face="Courier New" size="2">&nbsp; java com.reuters.rfa.example.omm.dictionary.DictionaryDemo -session myNS::rsslSession</font></b></li><li>
+	Download dictionaries from the network and dump the output to files: <br><b>
+	<font face="Courier New" size="2">&nbsp; java com.reuters.rfa.example.omm.dictionary.DictionaryDemo -session myNS::rsslSession -dumpFiles true</li></font></b><li>Provide local dictionary files and let DictionaryDemo compare version and ID with downloaded dictionaries:
+	<br>&nbsp;&nbsp;&nbsp; <b><font size="2" face="Courier New">java com.reuters.rfa.example.omm.dictionary.DictionaryDemo -session myNS::rsslSession 
+-rdmFieldDictionary \Var\Triarch\RDMFieldDictionary -enumType \Var\Triarch\enumtype.def</li></font></b></p>
+</ul>
+
+</body>
+

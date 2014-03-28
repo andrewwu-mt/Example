@@ -1,0 +1,112 @@
+
+<head>
+<style>
+<!--
+.Bullet_Dash { list-style-type: circle; text-indent: .5"; margin-left: .5" }
+-->
+</style>
+</head>
+
+<body>
+<p><b>StarterProvider_WarmStandby</b> is a simple interactive server provider example 
+that demonstrates the Warm Standby feature.</p>
+ 
+<p>The command line option:</p>
+<ul>
+	<li><font size="2" face="Courier New"><b>-enableConnectConfig</b></font>: 
+	Specifies whether to include ConnectionConfig
+information in the Login Response. A setting of
+	<font size="2" face="Courier New"><b>1</b></font> (default) includes ConnectionConfig information 
+	in the response, while <font size="2" face="Courier New"><b>0</b></font> means to not include it. 
+	Note that if
+the consumer connection specifies <font size="2" face="Courier New"><b>disableDownloadConnectionConfig=true</b></font>, the Login Request
+will contain <b><font size="2" face="Courier New">DownloadConnectionConfig=0</font></b> (false). This tells the provider 
+	to not include ConnectionConfig in the Login Response. If the consumer connection
+specifies <font size="2" face="Courier New"><b>disableDownloadConnectionConfig=false</b></font> or if the consumer connection does not 
+specify <font size="2" face="Courier New"><b>disableDownloadConnectionConfig</b></font>, the Login Request will contain a 
+	<font size="2" face="Courier New"><b>DownloadConnectionConfig=1</b></font> (true) and the provider will 
+	then include ConnectionConfig 
+in the Login Response.</li>
+	<li><font size="2" face="Courier New"><b>-serverList</b></font> specifies the list of servers 
+	available for Warm Standby. The provider must prioritize the serverList (least loaded
+to most loaded) prior to adding them to the ConnectionConfig information.</li>
+	<li><font size="2" face="Courier New"><b>-warmStandby</b></font> specifies that the provider supports the Warm 
+Standby feature. The provider will include <font size="2" face="Courier New"><b>RDMUser.Attrib.SupportStandby</b></font> in the Login Response
+message when <font size="2" face="Courier New"><b>-warmStandby=1</b></font>. For this demo, only 
+	<font size="2" face="Courier New"><b>-warmStandby=1</b></font> is allowed.</li>
+	<li><font size="2" face="Courier New"><b>-numStandbys</b></font> specifies the number of standby servers in the
+	<font size="2" face="Courier New"><b>serverList</b></font>. This information will be included in the Login Response as 
+	<font size="2" face="Courier New"><b>NumStandbyServers</b></font>.</li>
+</ul>
+
+<p>In the example, this provider:</p>
+<ul>
+	<li>Accepts Generic messages (<b>OMMMsg.MsgType.GENERIC</b>) containing <b>WarmStandbyInfo</b>.</li>
+	<li>Uses the <b>WarmStandbyMode</b> contained within the <b>WarmStandbyInfo</b>.</li>
+	<li>Sends updates only while Active (<b>WarmStandbyMode=0</b>)</li>
+	<li>Will not send updates while
+Standby (<b>WarmStandbyMode=1</b>)</li>
+</ul>
+
+<p>To set up the example: for the consumer:</p>
+<ol>
+	<li>Use the RFA Configuration Editor to define one or
+more <b>StandbyLists</b> under <b>_System->StandbyLists</b> (Steps 3 - 4 are 
+	done in this screen).</li>
+	<li>Specify multiple comma-delimited <b><font size="2" face="Courier New">
+	<i>host</i>:<i>port</i></font></b>
+values for the <b>serverList</b> key. </li>
+	<li>(Optional) Specify a <b><font size="2" face="Courier New"><i>host</i>:<i>port</i></font></b> value for the
+	<b>startingActiveServer</b> key. Remember that the <b>StandbyList->serverList</b> should be populated
+in the order of least loaded to most loaded.</li>
+	<li>Use the RFA Configuration Editor to specify one or more <b>StandbyLists</b> 
+	under <b>myNamespace-&gt;Connections-&gt;localConsumerConnection</b> as values for the 
+	<b>serverList</b> key (steps 6 - 7 are done in this screen).</li>
+	<li>Specify the value <b>RSSL</b> for the <b>connectionType</b> key.</li>
+	<li>(Optional) You can also specify <b>disableDownloadConnectionConfig</b>. 
+	A setting of <b>false</b> (default) sets the Login Request to contain the 
+	element <b>DownloadConnectionConfig=1</b> (i.e., true), and a setting of <b>true</b> sets the Login Request to contain element 
+	<b><font size="2" face="Courier New">DownloadConnectionConfig=0</font></b> 
+	(i.e., false).</li>
+</ol>
+
+<p>The <b>StarterProvider_WarmStandby</b> application supports the following command line parameters.</p>
+<ul>
+ <li><b><font size="2" face="Courier New">debug</font></b>: Enables detailed logging for RFA. 
+	The default is <b><font size="2" face="Courier New">false</font></b>.</li>
+ <li><b><font size="2" face="Courier New">provSession</font></b>: Sets the name of 
+	the Provider session. The default is <font size="2" face="Courier New"><b>myNamespace::provSession</b></font>.</li>
+ <li><b><font size="2" face="Courier New">listenerName</font></b>: Sets a unique 
+	name that specifies the connection on which to listen. The default is
+	<font size="2" face="Courier New"><b>""(null)</b></font>.<li><b>
+	<font size="2" face="Courier New">serviceName</font></b>: Sets the service name for the
+	<b>SrcDirectory</b> response. The default is
+	<font size="2" face="Courier New"><b>DIRECT_FEED</b></font>.</li>
+ <li><b><font size="2" face="Courier New">rdmFieldDictionary</font></b>: Sets 
+	the RDM Field dictionary name and location.&nbspThe default is
+	<font size="2" face="Courier New"><b>/var/triarch/RDMFieldDictionary</b></font>.</li>
+ <li><b><font size="2" face="Courier New">enumType</font></b>: Sets the enum dictionary name and location.&nbspThe 
+	default is <font size="2" face="Courier New"><b>/var/triarch/enumtype.def</b></font>.</li>
+ <li><b><font size="2" face="Courier New">acceptSession</font></b>: Sets whether or not to accept the consumer session. 
+	The default is <font size="2" face="Courier New"><b>true</b></font>.</li>
+ <li><b><font size="2" face="Courier New">updateInterval</font></b>: Sets the update interval in seconds. 
+	The default is <font size="2" face="Courier New"><b>1</b></font>.</li>
+ <li><b><font size="2" face="Courier New">updateRate</font></b>: Sets the update 
+	rate per interval. The default is <font size="2" face="Courier New"><b>2</b></font>.</li>
+ <li><b><font size="2" face="Courier New">runTime</font></b>: Sets the length of 
+	time (in seconds) for which the application runs before exiting. The default 
+	is <font size="2" face="Courier New"><b>600</b></font>.</li> 
+ <li><b><font size="2" face="Courier New">warmStandby</font></b>: Sets whether 
+	to support Warm Standby. The default is <font size="2" face="Courier New">
+	<b>1</b></font>.</li>
+ <li><b><font size="2" face="Courier New">numStandbys</font></b>: Sets the number of standby servers from the list. 
+	The default is <font size="2" face="Courier New"><b>2</b></font>.</li>
+ <li><b><font size="2" face="Courier New">serverList</font></b>: Sets the list of active and standby servers from Infra. 
+	The default is <font size="2" face="Courier New"><b>localhost:14001:a localhost:14002:s</b></font>.</li>
+</ul>
+
+<p>You can run this example as an application with the following commands:</p>
+<p>&nbsp;&nbsp;&nbsp; <b><font size="2" face="Courier New">java com.reuters.rfa.example.omm.warmstandbyprov.StarterProvider_WarmStandby -serviceName DIRECT_FEED</font></b></p>
+ 
+</body>
+

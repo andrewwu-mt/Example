@@ -1,0 +1,45 @@
+<body>
+<p>StarterProvider_Interactive is a simple provider example to demonstrate how to publish Reuters Domain Model data using
+ the Open Message Model.  This application is server application  One thread dispatches 
+ client session connection request, item requests, and timer events.  Updates are sent when the timer event
+ is received.  A consumer application (source distributor, P2PS or RFA OMMConsumer) may connect to the server to request data. 
+ 
+ Currently, the StarterProvider_Interactive application provides Logins, Service Directories, Dictionaries, and Market Price.  
+ It can be easily extended to provide other message model types.
+ 
+ StarterProvider_Interactive supports pause and resume, consumer can send a Login request that contain SupportPauseResume entry 
+ in the attrib. StarterProvider_Interactive will respond with the same value as the request. If SupportPauseResume does not exist in
+ the Login request, it will also be eliminated from the response. However no update conflation logic implemented.
+ 
+</p>
+
+<b>StarterProvider_Interactive provides examples of how to:</b>
+<ul>
+  <li>Create a Session and an EventQueue 
+  <li>Create an OMMProvider event source 
+  <li>Listen to client connections 
+  <li>Handle simple pause resume request
+  <li>Dispatch events from an EventQueue 
+  <li>Cleanup a Session 
+</ul>
+
+<p><b>The StarterProvider_Interactive application currently supports the following command line parameters.</b></p>
+<ul>
+  <li><b>debug</b> - enable detailed logging for RFA (default is &quot;false&quot;)</li>
+ <li><b>provSession</b> - name of Provider session. (default is &quot;myNamespace::provSession&quot;)</li>
+ <li><b>serviceName</b> - Service name for the SrcDirectory response. (default is &quot;DIRECT_FEED&quot;)</li>
+ <li><b>listenerName</b> - Unique name that specifies a connection to listen. (default is &quot;""(null)&quot;) 
+ <li><b>updateInterval</b> - Update interval in seconds. (default is &quot;1&quot;)</li>
+ <li><b>updateRate</b> - Update rate per interval. (default is &quot;2&quot;)</li>
+ <li><b>rdmFieldDictionary</b> - RDM Field dictionary name and location.&nbsp
+  (default is &quot;/var/triarch/RDMFieldDictionary&quot;)</li>
+ <li><b>enumType</b> - Enum dictionary name and location.&nbsp
+  (default is &quot;/var/triarch/enumtype.def&quot;)</li>
+ <li><b>runTime</b> - How long (in seconds) application should run before exiting (default is &quot;600&quot;)</li>
+</ul>
+
+<p><b>The example can be run as an application with the following commands:</b></p>
+<p>java com.reuters.rfa.example.omm.prov.StarterProvider_Interactive -serviceName DIRECT_FEED</p>
+ 
+</body>
+

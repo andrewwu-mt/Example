@@ -1,0 +1,70 @@
+<body>
+<p>
+The NewsViewer is a GUI application that uses RFA to retrieve news data which are updated in real time. 
+The application uses RFA's OMM Consumer model to retrieve many news data types such as alert, 
+headline or story data from the back-end server infrastructure.
+</p>
+<p>
+The headline data are displayed on the middle of the screen.
+If user double clicks on a news headline, the story of it will be shown in the bottom.
+The filter button on the top of screen is used to filter headline data with attributions,
+topic codes, company codes, product codes and languages.
+This application does not limit the number of headline. Therefore, the very large number
+of headline may cause out of memory problem.
+</p>
+<p>
+This application uses the {@linkplain com.reuters.rfa.example.framework.sub framework.sub}
+for context initialization and data consuming/subscription.
+</p>
+
+<br><b>NewsViewer:</b>
+<br><img src="{@docRoot}/../../portal/images/newsviewer.jpg">
+<br>
+<br><b>Filter of NewsViewer:</b>
+<br><img src="{@docRoot}/../../portal/images/newsviewerFilter.jpg">
+
+<p><b>The NewsViewer application consists of several distinct components</b>
+<ul>
+<li>The NewsViewer, which initializes the example and bring the GUI components together.</li>
+<li>The News Headline component, which allows the user to select which headline to show the story content.</li>
+<li>The NewsCodeDb and Headline, which store the headline data for filtering.</li>
+<li>The News Filter component, which lets the user filter the headline they are interested in.</li>
+<li>The News Story component, which displays story of headline that user select.</li>
+</ul>
+</p>
+
+<p><b>The following command line configuration parameters are currently available.</b>
+<ul>
+<li><b>help</b> - Display help information and exit.  The default is false.
+<li><b>session</b> - Consumer session.  The default is myNamespace::mySession.
+<li><b>serviceName</b> - Service name to request the news items. The default is "IDN_RDF".  If this is 
+   set to a service name, that service name must be available before requests are allowed.  If this
+   is not specified, and itemNames is specified, then the items will be requested from the first
+   service in the directory.
+<li><b>itemName</b> - Item name to request. This should be the news item name.  The default is "N2_UBMS".
+<li><b>fontName</b> - Font name or logical font name. Display of international characters requires a font that 
+supports the required Unicode range of characters. The default is the logical font name "Arial Unicode MS".
+The Java default font will be used if the specified font does not installed in the machine. 
+The default font may not be able to support international characters.
+<li><b>user</b> - DACS username for login. The default is the value from "user.name" property or "guest".</li>
+<li><b>position</b> - DACS position for login. The default is local host or "1.1.1.1/net".</li>
+<li><b>application</b> - DACS application ID for login. The default is "256".</li>
+<li><b>fileDictionary</b> - load dictionary from file. The default is false.</li>
+<li><b>enumType</b> - enumtype.def filename. The default is "/var/triarch/enumtype.def".</li>
+<li><b>debug</b> - enable debug tracing. The default is false.</li>
+</ul>
+
+<p>The following parameter can also be used.
+<ul>
+	<li><b>rdmFieldDictionary</b> - RDMFieldDictionary filename. The default is "/var/triarch/RDMFieldDictionary".
+	</li>
+</ul>
+</p>
+
+<p><b>The NewsViewer application can be run with the following commands:</b></p>
+<ul>
+<li>To retrieve News items using OMM consumer model
+<br>java com.reuters.rfa.example.omm.idn.newsviewer.NewsViewer -session myNamespace::rsslSession -serviceName IDN_RDF
+</li>
+</ul>
+</body>

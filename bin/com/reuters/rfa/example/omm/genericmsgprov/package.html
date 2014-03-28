@@ -1,0 +1,45 @@
+<body>
+<p><b>StarterProvider_GenericMsg</b> is a simple interactive server provider example that demonstrates
+ how to interactively publish and receive generic messages using the Open Message Model.  
+ 
+ This application is single-threaded server application. <b>StarterConsumer_GenericMsg</b> must 
+ connect to this server to request data.
+ 
+ Currently, this application provides Login, Directory, and generic messages on 
+ an items stream. It also receives and processes generic messages from the consuming application.  
+ You can easily extend the example to provide other types of data.
+ 
+ The <b>StarterConsumer_GenericMsg</b> will initiate a bidirectional conversation using generic messages. 
+ After the <b>StarterProvider_GenericMsg</b> receives the initial generic message, it will send a generic message
+ every second and process the generic message that the server receives as a response from 
+ the consuming application.
+</p>
+
+<b>StarterProvider_GenericMsg</b> provides examples of how to:
+<ul>
+  <li>Create a Session and an EventQueue 
+  <li>Create an OMMProvider event source 
+  <li>Listen to the client connection 
+  <li>Handle and send generic messages
+  <li>Dispatch events from an EventQueue 
+  <li>Cleanup a Session 
+</ul>
+
+<p>The <b>StarterProvider_GenericMsg</b> application supports the following 
+command line parameters:</p>
+<ul>
+  <li><b>debug</b>: Enables detailed logging for RFA. The default is
+	<font face="Courier New" size="2"><b>false</b></font>.</li>
+ <li><b>provSession</b>: Sets the name of the Provider session. The default is
+	<font face="Courier New" size="2"><b>RSSLNamespace::localProviderSession</b></font>.</li>
+ <li><b>submitRate</b>: Sets how frequently to send generic messages (in seconds). 
+	The default is <font face="Courier New" size="2"><b>1</b></font>.</li>
+ <li><b>runTime</b>: Sets the duration (in seconds) for which the application runs before exiting. 
+	The default is <font face="Courier New" size="2"><b>600</b></font>.</li>
+</ul>
+
+<p>You can run this example as an application with the following commands:</p>
+<p>&nbsp;&nbsp;&nbsp; <b><font face="Courier New" size="2">java com.reuters.rfa.example.omm.genericmsgprov.StarterProvider_GenericMsg</font></b></p>
+ 
+</body>
+

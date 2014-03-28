@@ -1,0 +1,101 @@
+<body>
+<p><b>StarterConsumer_BatchView</b> shows how to request and reissue view and batch items using
+RFA Java's OMM consumer model. If more than one item is requested, batch request will be made.
+Optionally view requests can also be sent with the batch request. 
+View requests can be sent with one item request also i.e. with a non-batch item request.
+Optionally batch reissues can be made as well. 
+This application can connect to an RFA OMMProvider / P2PS / RDFD using an RSSL connection. </p>
+
+The application:
+<ol>
+	<li>Registers for Login.</li>
+	<li>Handles the Login response.</li>
+	<li>Request and handle a Directory.</li>
+	<li>Registers for item request(s) with one of the following models:</li>
+</ol>
+<ul>
+	<li><b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_PRICE MARKET_PRICE}</font></b></li>
+	<li><b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_BY_ORDER MARKET_BY_ORDER}</font></b></li>
+	<li><b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_BY_PRICE MARKET_BY_PRICE}</font></b></li>
+	<li><b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_MAKER MARKET_MAKER}</font></b></li>
+	<li><b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#SYMBOL_LIST SYMBOL_LIST}</font></b></li>
+</ul>
+
+<ol>
+	<li value="5">If reissue was requested, a 
+	{@linkplain com.reuters.rfa.session.TimerIntSpec TimerIntSpec}
+	is registered which will send batch reissues at the specified interval.</li>
+	
+	<li>To parse <font size="2" face="Courier New"><b>{@link com.reuters.rfa.omm.OMMMsg OMMMsg}</b></font>, 
+	use <font size="2" face="Courier New"><b>{@link com.reuters.rfa.example.utility.GenericOMMParser GenericOMMParser}</b></font>.
+	</li> 
+</ol>
+
+<p><b>StarterConsumer_BatchView</b> supports the following command line 
+arguments:</p>
+<ul>
+  <li><b>debug</b>: Enables detailed logging for RFA. The default is <b>
+	<font size="2" face="Courier New">false</font></b>.</li>
+ <li><b>session</b>: Sets the name of the consumer session to acquire.
+ Its connection list should include at least one RSSL connection. The default is 
+	<b><font size="2" face="Courier New">myNamespace::mySession</font></b>.</li>
+ <li><b>serviceName</b>: Sets the name of the source directory to use. The 
+	default is <b><font size="2" face="Courier New">DIRECT_FEED</font></b>.</li>
+ <li><b>itemName</b>: Sets the comma-delimited list of items to open. If you 
+	specify more than one item, the request is sent as batch request. The 
+	default is <font size="2" face="Courier New"><b>TRI.N</b></font>.<b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	Note:</b> The comma (<b><font size="2" face="Courier New">,</font></b>) is a valid character for 
+	a RIC name. If any RIC names use a comma, you must modify the application.</li>
+ <li><b>mmt</b>: Sets the Message Model Type. The default is <b>
+	<font size="2" face="Courier New">MARKET_PRICE</font></b>.</li>
+ <li><b>attribInfoInUpdates</b>: Sets the provider to send OMMAttribInfo with 
+	its update and status messages. The default is <b>
+	<font size="2" face="Courier New">false</font></b>.</li>
+ <li><b>user</b>: Sets the DACS username for Login. The default is value of&nbsp; user.name 
+	system property.</li>
+ <li><b>position</b>: Sets the DACS position for Login. The default is IP 
+	address/hostname.</li>
+ <li><b>application</b>: Sets the DACS application ID for Login. The default is
+	<font size="2" face="Courier New"><b>256</b></font>.</li>
+ <li><b>rdmFieldDictionary</b>: Sets the RDM Field dictionary name and location.&nbspThe default is &quot;<font size="2" face="Courier New"><b>/var/triarch/RDMFieldDictionary</b></font>.</li>
+ <li><b>enumType</b>: Sets the enum dictionary name and location.&nbspThe 
+	default is <font size="2" face="Courier New"><b>/var/triarch/enumtype.def</b></font>.</li>
+ <li><b>runTime</b>: Sets the length of time (in seconds) for which the application should run before exiting. 
+	The default is <font size="2" face="Courier New"><b>600</b></font>.</li>
+ <li><b>sendView</b>: Sets whether to send a view request. The default is
+	<font size="2" face="Courier New"><b>true</b></font>.</li>
+ <li><b>viewType</b>: Sets the view type: <font size="2" face="Courier New"><b>1</b></font> 
+	for field list view, <font size="2" face="Courier New"><b>2</b></font> for 
+	element list view. The default is <font size="2" face="Courier New"><b>1</b></font>.</li>
+ <li><b>viewData</b>: Comma separated list of fids or element names you want to 
+	receive from market data. The default is <font size="2" face="Courier New">
+	<b>22</b></font>.</li>
+ <li><b>sendReissue</b>: Sets whether to send batch reissues. The default is
+ 	<font size="2" face="Courier New"><b>true</b></font>.</li>
+ <li><b>reissueInterval</b>: Sets the interval (in seconds) between reissues
+ 	(and between the initial request and the first reissue). The default is
+ 	<font size="2" face="Courier New"><b>15</b></font>.</li>
+ <li><b>reissueWithPAR</b>: Sets whether to send Pause and Resume with the reissue, 
+ 	alternating with each reissue. The default is
+ 	<font size="2" face="Courier New"><b>true</b></font>.</li>
+ <li><b>reissueWithPriority</b>: Sets whether to send Priority with the reissue,
+ 	using a different Priority with each reissue. The default is
+ 	<font size="2" face="Courier New"><b>true</b></font>.</li>
+ <li><b>initialRequestPaused</b>: Sets whether the initial batch request is Paused.
+ 	The default is <font size="2" face="Courier New"><b>false</b></font>.</li>
+ <li><b>ricFile</b>: Read the item list from a specified file. The default is
+ 	<font size="2" face="Courier New"><b>false</b></font>. Any other value will
+ 	be considered a file name. The file name may optionally contain the path as well.
+	The file must be an ASCII text file that contains item names separated by spaces
+	or carriage returns.</li>
+ <li><b>maxCount</b>: The maximum number of items to request from the ric file.
+ 	The default is <font size="2" face="Courier New"><b>-1</b></font></li>.
+</ul>
+
+<p>The example can be run as an application with the following commands:</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="2" face="Courier New"><b>java com.reuters.rfa.example.omm.batchviewcons.StarterConsumer_BatchView
+-itemName CSCO.O, MSFT, TRI -serviceName DIRECT_FEED</b></font></p>
+ 
+</body>
+

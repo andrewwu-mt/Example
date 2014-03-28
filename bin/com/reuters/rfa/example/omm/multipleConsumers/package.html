@@ -1,0 +1,117 @@
+<style>
+<!--
+.med {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: medium; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#res {
+	PADDING-RIGHT: 1em; MARGIN: 0px 16px
+}
+OL LI {
+	LIST-STYLE-TYPE: none
+}
+.g {
+	MARGIN: 1em 0px
+}
+LI.g {
+	FONT-SIZE: small; FONT-FAMILY: arial,sans-serif
+}
+.s {
+	max-width: 42em
+}
+.s {
+	WIDTH: 544px
+}
+-->
+</style>
+<body>
+<p>MultipleConsumers is a multi-threaded console application that uses RFA Java 
+to connect and request items from multiple servers at the same time, from 
+different sessions. </p>
+
+<p><b>Source code location: </b> $RFA/Examples/com/reuters/rfa/example/omm/multipleConsumers</p>
+
+<p>The application creates multiple sessions. Each session creates an event 
+source, connects and logs in to a server using RSSL Connection, requests items 
+using the MARKET_PRICE model and dispatches events. The item event messages may 
+be decoded.<span class="534295619-12062009"><font face="Times New Roman"> This 
+functionality is handled by the application implemented Client.</font></span></p>
+
+<p><span class="534295619-12062009"><font face="Times New Roman">Message 
+Statistics are collected and logged to the console every 5 secs. </font>
+</span> </p>
+
+<p>Each session creates a thread to requests items. The thread exits once the 
+requests are made.</p>
+
+<p>Item events (images and updates) are dispatched for each session. An event 
+queue may be used to dispatch events. Usage of an event queue is configurable. 
+If using an event queue, the session creates a thread to dispatch events. If an 
+event queue is not used i.e. if the event queue is null, the events are 
+dispatched using&nbsp; RFA's thread.&nbsp; Requests made with a null EventQueue 
+will allow each Connection/Session/Application Client combination to process 
+updates completely in parallel.</p>
+
+<p>The application allows sessions to be created and configured at runtime thus 
+avoiding the ConfigDB which makes it easy to use the application</p>
+
+<p>The MultipleConsumers supports the following command line arguments. </p>
+
+<ul>
+  <li><b>user</b> - DACS username for Login (default is value of&nbsp; user.name 
+  system property) </li>
+  <li><b>position</b> - DACS position for login for Login (default is IP 
+  address/hostname) </li>
+  <li><b>application</b> - DACS application ID for Login (default is &quot;256&quot;)</li>
+  <li><b>rdmFieldDictionary</b> - RDM Field dictionary name and location.&nbsp; 
+  (default is &quot;/var/reuters/RDMFieldDictionary&quot;) </li>
+  <li><b>enumType</b> - Enum dictionary name and location.&nbsp; (default is &quot;/var/reuters/enumtype.def&quot;)</li>
+  <li><b>serviceName - </b>Service used for requests. (default is &quot;DIRECT_FEED&quot;)</li>
+  <li><b>itemCount</b> - The number of item requests from each session ( default 
+  is 50000)</li>
+  <li><b>decodeLevel</b> - Level of decoding (0=no decoding, 1= payload, 
+  2=iterate, 3=data, 4=field content, 5=all) (default is 0)</li>
+  <li><b>sessionCount</b> - No of sessions to establish (default is 0)</li>
+  <li><b>sessionList</b> - Comma separated list of hosts&quot; (default is 
+  localhost:14002,localhost:14003); <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  The sessionConfiguration shareConnection must be FALSE</li>
+  <li><b>autoSession</b> - Configures sessions at runtime; this avoids config DB 
+  (default is true); <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  The no of sessions to be configured &amp; established is&nbsp;&nbsp;&nbsp;&nbsp; 
+  specified by -sessionCount</li>
+  <li><b>autoStartPort</b> - The port number for the 1st automatic session; 
+  valid only if autoSession is TRUE (default is 14001)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  e.g. is -sessionCount=10, 10 sessions are created starting from port 14001</li>
+  <li><b>nullEventQList</b> - Comma separated list of sessions using null event 
+  queue (default is &quot;&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  Range values supported <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  e.g. 1,2 : sessions 1, 2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1-2 : sessions 1,2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1-3,5 : sessions 1,2,3,5</li>
+  <li><b>mmt</b> - message model type (default is MARKET_PRICE)</li>
+  <li><b>runTime</b> - Application Run time in secs (default is 600)</li>
+</ul>
+
+<p><font face="Times New Roman"><b>The example can be run as an application with the following commands:</b></font></p>
+<p><font face="Times New Roman">java </font><span class="534295619-12062009">
+<font face="Times New Roman">
+com.reuters.rfa.example.omm.multipleConsumers.MultipleConsumers</font></span><font face="Times New Roman">
+</font><span class="534295619-12062009"><font face="Times New Roman">-rdmFieldDictionary 
+c:\test\dict\RDMFieldDictionary&nbsp;-enumType c:\test\dict\enumtype.def -serviceName 
+DIRECT_FEED&nbsp;-itemCount 50000 -decodeLevel 5&nbsp;-sessionList myTest::localOMMConsumer02,myTest::localOMMConsumer03&nbsp;-sessionCount 
+2 -runTime 1000 -nullEventQList 1<br>
+&nbsp;</font></span></p>
+ 
+<p><span class="534295619-12062009"><font face="Times New Roman"><u>JVM options:<br>
+</u>-server -Xms1024m -Xmx1024m&nbsp; -XX:+AggressiveOpts&nbsp;-XX:+UseBiasedLocking -XX:+UseFastAccessorMethods</font></span></p>
+ 
+<p><b>Assumptions</b></p>
+<li>The numbers of&nbsp; servers (provider applications) equals the number of 
+sessions</li>
+</body>

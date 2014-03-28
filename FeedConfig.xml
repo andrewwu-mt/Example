@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE preferences SYSTEM "http://java.sun.com/dtd/preferences.dtd">
+<preferences EXTERNAL_XML_VERSION="1.0">
+  <root type="user">
+    <map />
+    <node name="com">
+      <map />
+      <node name="reuters">
+        <map />
+        <node name="rfa">
+          <map />
+          <node name="myNS">
+            <map />
+            <node name="Connections">
+              <map />
+              <node name="CONNECT_RSSED">
+                <map>
+                  <entry key="connectionType" value="RSSL" />
+                  <entry key="portNumber" value="14002" />
+                  <entry key="serverList" value="54.238.59.183" />
+                </map>
+              </node>
+            </node>
+            <node name="Sessions">
+              <map />
+              <node name="RSSLSession">
+                <map>
+                  <entry key="connectionList" value="myNS::CONNECT_RSSED" />
+                </map>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </root>
+</preferences>

@@ -1,0 +1,47 @@
+<body>
+<p>StarterConsumer demonstrates how to subscribe to Reuters Domain Model data using RFA's OMM Consumer model. 
+It can connect to an RFA OMMProvider / P2PS / RDFD using RSSL connection. </p>
+
+<b>This application does the following:</b>
+<ul>
+  <li>Register for Login
+  <li>Handle Login response
+  <li>Register for item(s) request with one of the following models:
+  {@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_PRICE MARKET_PRICE}, 
+  {@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_BY_ORDER MARKET_BY_ORDER}, 
+  {@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_BY_PRICE MARKET_BY_PRICE}, 
+  {@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_MAKER MARKET_MAKER}, 
+  {@linkplain com.reuters.rfa.rdm.RDMMsgTypes#SYMBOL_LIST SYMBOL_LIST}
+  <li>Use {@link com.reuters.rfa.example.utility.GenericOMMParser GenericOMMParser} to parse {@link com.reuters.rfa.omm.OMMMsg OMMMsg}
+</ul>
+
+<p><b>The StarterConsumer application currently supports the following command line arguments.</b></p>
+<ul>
+  <li><b>debug</b> - enable detailed logging for RFA (default is &quot;false&quot;)</li>
+ <li><b>session</b> - name of consumer session to acquire.
+ Its connection list should include at least one RSSL connection.&nbsp; (default is &quot;myNamespace::mySession&quot;)</li>
+ <li><b>serviceName</b> - name of source directory to use. (default is &quot;DIRECT_FEED&quot;)</li>
+ <li><b>itemName</b> - List of items to open separated by ','. (default is &quot;TRI.N&quot;) 
+ <b>Please note that ',' is a valid character for RIC name. The application need to be modified if RIC names have ','.</b></li>
+ <li><b>mmt</b> - Message Model Type. (default is &quot;MARKET_PRICE&quot;)</li>
+ <li><b>attribInfoInUpdates</b> - Ask provider to send OMMAttribInfo with update and status messages (default is &quot;false&quot;)</li>
+ <li><b>user</b>  - DACS username for Login (default is value of&nbsp; user.name system property)</li>
+ <li><b>position</b> - DACS position for login for Login (default is IP address/hostname)</li>
+ <li><b>application</b> - DACS application ID for Login (default is &quot;256&quot;)</li>
+ <li><b>rdmFieldDictionary</b> - RDM Field dictionary name and location.&nbsp
+(default is &quot;/var/triarch/RDMFieldDictionary&quot;)</li>
+ <li><b>enumType</b> - Enum dictionary name and location.&nbsp
+  (default is &quot;/var/triarch/enumtype.def&quot;)</li>
+ <li><b>runTime</b> - How long (in seconds) application should run before exiting
+  (default is &quot;600&quot;)</li>
+</ul>
+
+<p><b>The example can be run as an application with the following commands:</b></p>
+<p>java com.reuters.rfa.example.omm.cons.StarterConsumer 
+-itemName CSCO.O -serviceName DIRECT_FEED</p>
+ 
+<p>Note: An OMM consumer application doesn't need to make a request for directory. 
+As a result this example doesn't request for DIRECTORY. User need to know a service name 
+that is available.</p>
+</body>
+

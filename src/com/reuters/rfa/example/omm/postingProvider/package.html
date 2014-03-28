@@ -1,0 +1,99 @@
+<body>
+<p><b>StarterProvider_Post</b> is a simple provider application demonstrating how to 
+handle received post messages, send ack messages, and re-send messages received 
+via posts. It can also interactively publish Reuters Domain Model 
+data using the Open Message Model.
+This application is a server application.  One thread dispatches 
+ client session connection request, item requests, posts, and timer events. 
+Updates are sent when the timer event is received.&nbsp;<b>StarterProvider_Post</b> provides Logins, Service Directories, Dictionaries, and Market 
+Price. It can be easily extended to provide other types of data.</p>
+
+<p>The <b>StarterProvider_Post</b> supports posting on both Item Stream (On-stream 
+Posting) and&nbsp;Login Stream (Off-stream Posting).<br>
+<br>
+A consumer application, either a Source Distributor or RFA OMMConsumer, must 
+connect to the server to request data, post data, or post messages. </p><b>StarterProvider_Post</b> provides examples of how to:
+<ul>
+  <li>Create a Session and an EventQueue 
+  <li>Create an OMMProvider event source 
+  <li>Listen to client connections 
+  <li>Handle request Login, Directory, Dictionary and Items<li>Notify Consumer 
+  Application of Posting 
+  feature availability through the Login Respone Message<li>Handle Post 
+  Messages, Send Ack Messages<li>Re-Send OMM messages received via posts to consumer 
+  applications<li>Send Publisher Info with Refresh/Update/Status messages<li>Dispatch events from an EventQueue 
+  <li>Cleanup a Session 
+</ul>
+
+<p>The <b>StarterProvider_Post</b> application supports the following command 
+line parameters:</p>
+<ul>
+  <li><b><font size="2" face="Courier New">debug</font></b>: Enables detailed logging for RFA. 
+	The default is <b><font size="2" face="Courier New">false</font></b>.</li>
+ <li><b><font size="2" face="Courier New">provSession</font></b>: Sets the name of 
+	the Provider session. The default is <b><font size="2" face="Courier New">myNamespace::provSession</font></b>.</li>
+ <li><b><font size="2" face="Courier New">listenerName</font></b>: Sets a unique 
+	name that specifies the connection on which to listen. The default is <b>
+	<font size="2" face="Courier New">&quot;&quot;(null)</font></b>. 
+ <li><b><font size="2" face="Courier New">acceptSession</font></b>: Accepts or 
+	denies a Session. The default is <b><font size="2" face="Courier New">true</font></b>.<li>
+	<b><font size="2" face="Courier New">runTime</font></b>: Sets the duration 
+	(in seconds) for which the application runs before exiting. The default is
+	<b><font size="2" face="Courier New">600</font></b>.<li><b>
+	<font size="2" face="Courier New">rdmFieldDictionary</font></b>: Sets the RDM Field dictionary name and location. 
+	The default is <b><font size="2" face="Courier New">/var/triarch/RDMFieldDictionary</font></b>.<li><b>
+	<font size="2" face="Courier New">enumType</font></b>: Sets the enum dictionary name and location. 
+	The default is <b><font size="2" face="Courier New">/var/triarch/enumtype.def</font></b>.</li>
+ <li><b><font size="2" face="Courier New">serviceName</font></b>: Sets the name 
+	of the service for the SrcDirectory response. The default is <b>
+	<font size="2" face="Courier New">DIRECT_FEED</font></b>.</li>
+  <li><b><font size="2" face="Courier New">sendUpdates</font></b>: Turns on/off 
+	item updates. The default is <b><font size="2" face="Courier New">false</font></b>.</li>
+  <li><b><font size="2" face="Courier New">updateInterval</font></b>: Sets the 
+	update interval in seconds. The default is <b>
+	<font size="2" face="Courier New">1</font></b>.</li>
+ <li><b><font size="2" face="Courier New">updateRate</font></b>: Sets the update 
+	rate per interval. The default is <b><font size="2" face="Courier New">2</font></b>.</li>
+  <li><b><font size="2" face="Courier New">supportPost</font></b>: Sets whether 
+	to support OMM Post feature. The default is <b>
+	<font size="2" face="Courier New">true</font></b>.</li>
+  <li><b><font size="2" face="Courier New">ackList</font></b>: Comma-delimited 
+	list of post ids that require ack messages. This parameter supports a range 
+	of numbers. The Default is <b><font size="2" face="Courier New">1-1000,1500</font></b>.</li>
+  <li><b><font size="2" face="Courier New">positiveAck</font></b>: Sets the 
+	application to send Positive ack or Negative ack messages. The Default is <b>
+	<font size="2" face="Courier New">true</font></b>.</li>
+  <li><b><font size="2" face="Courier New">setStatusCode</font></b>: Sets the 
+	status code in the ack. This parameter is not required for positive acks. 
+	The default is <b><font size="2" face="Courier New">false</font></b>.</li>
+  <li><b><font size="2" face="Courier New">setStatusText</font></b>: Set Status 
+	text in the ack. This parameter is not required for positive acks. The 
+	default is <b><font size="2" face="Courier New">false</font></b>.</li>
+  <li><b><font size="2" face="Courier New">setStateUsingOMMState</font></b>: Sets 
+	whether to include the ack Status indirectly on the <b>OMMMsg</b> using <b>OMMState</b>. 
+	The default is <b><font size="2" face="Courier New">true</font></b>.</li>
+  <li><b><font size="2" face="Courier New">ackEncodeAttrib</font></b>: Sets 
+	whether to encode Attrib data in the ack Message. The default is <b>
+	<font size="2" face="Courier New">false</font></b>.</li>
+  <li><b><font size="2" face="Courier New">ackEncodePayload</font></b>: Sets 
+	whether to encode Payload data in the ack Message. The default is <b>
+	<font size="2" face="Courier New">false</font></b>.</li>
+  <li><b><font size="2" face="Courier New">sendPublisherInfo</font></b>: Sets 
+	the application to send Publisher Info on Refresh/Update/Status messages. 
+	The default is <b><font size="2" face="Courier New">true</font></b>.</li>
+  <li><b><font size="2" face="Courier New">forwardPostPayloadMsg</font></b>: 
+	Sets the application to send post payload OMMMsg to the consumer 
+	application.<font SIZE="2" COLOR="#2a00ff"> </font>Only item streams are 
+	supported. The default is <b><font size="2" face="Courier New">true</font></b>.</li>
+</ul>
+
+<p>You can run the example as an application with the following commands:</p>
+<p>&nbsp;&nbsp;&nbsp; <b><font size="2" face="Courier New">com.reuters.rfa.example.omm.postingProvider.StarterProvider_Post -provSession 
+rsslJava::aProviderLocal02&nbsp; -sendUpdates false
+-updateInterval 1 -updateRate 2 -supportPost true -ackList 1-2,4 -positiveAck 
+true -setStatusCode false
+-setStatusText false -setStateUsingOMMState true -ackEncodeAttrib false 
+-ackEncodePayload false -sendPublisherInfo true
+-forwardPostPayloadMsg true </font></b> </p>
+ 
+</body>

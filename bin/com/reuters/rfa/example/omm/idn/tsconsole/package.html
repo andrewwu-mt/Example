@@ -1,0 +1,55 @@
+<body>
+Shows how to retrieve TS1 historical data from a remote service, decode it, and 
+print it to the console.<p>The application first uses the {@linkplain 
+com.reuters.rfa.example.framework.sub framework.sub} for context initialization.&nbsp; 
+The application then loads the TS1 reference dictionary with the example 
+framework class {@link 
+com.reuters.rfa.example.framework.idn.RefChainTimeSeriesDefDb 
+RefChainTimeSeriesDefDb}.&nbsp; It uses the example framework class {@link 
+com.reuters.rfa.example.framework.idn.TS1TimeSeries TS1TimeSeries} to retrieve 
+the TS1 data from a {@link com.reuters.rfa.session.Session Session} and to parse 
+the data with the {@linkplain com.reuters.ts1 TS1 parser}.&nbsp; After 
+the time series has been retrieved, the data is printed to the console with this 
+example's {@link com.reuters.rfa.example.omm.idn.tsconsole.ConsoleTSClient 
+ConsoleTSClient}.</p>
+<p><b>The following command line configuration parameters are currently 
+available.</b> </p>
+<ul>
+	<li><b>help</b> - Display help information and exit. The default is false. 
+	</li>
+	<li><b>session</b> - Consumer session. The default is myNamespace::mySession. 
+	</li>
+	<li><b>serviceName</b> - Service name to request the preload items. The 
+	default is &quot;IDN_RDF&quot;. 
+	</li>
+	<li><b>itemName</b> - list of ',' separated item names to request. The default 
+	is &quot;TRI.N&quot;. 
+	</li>
+	<li><b>count</b> - number of samples to display.&nbsp; Values <= 0 mean all samples.  The default is &quot;-1&quot;.</li>
+	<li><b>user</b> - DACS username for login. The default is the value from &quot;user.name&quot; 
+	property or &quot;guest&quot;. </li>
+	<li><b>position</b> - DACS position for login. The default is local host or 
+	&quot;1.1.1.1/net&quot;. 
+	</li>
+	<li><b>application</b> - DACS application ID for login. The default is 
+	&quot;256&quot;. 
+	</li>
+	<li><b>fileDictionary</b> - load dictionary from file. The default is false. 
+	</li>
+	<li><b>enumType</b> - enumtype.def filename. The default is &quot;/var/triarch/enumtype.def&quot;. 
+	</li>
+	<li><b>debug</b> - enable debug tracing. The default is false. </li>
+</ul>
+<p>The following parameter can also be used. </p>
+<ul>
+	<li><b>rdmFieldDictionary</b> - RDMFieldDictionary filename. The default is 
+	&quot;/var/triarch/RDMFieldDictionary&quot;. </li>
+</ul>
+<p><b>The TimeSeriesConsole application can be run with the following commands:</b></p>
+<li>To retrieve real-time page using OMM consumer model <br>
+java com.reuters.rfa.example.omm.idn.tsconsole.TimeSeriesConsole -session 
+myNamespace::rsslSession -itemName TRI.N -serviceName IDN_RDF</li>
+<p>&nbsp;</p>
+</body>
+
+

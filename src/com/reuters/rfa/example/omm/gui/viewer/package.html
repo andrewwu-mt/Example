@@ -1,0 +1,119 @@
+<body>
+<p>
+The <b>Viewer</b> is a GUI application that uses RFA to retrieve OMM data and 
+display it in table form. 
+The application uses RFA's OMM Consumer model to retrieve level 1 data (MarketPrice), 
+level 2 data, or a symbol list from from the back-end server infrastructure. 
+Any domain message model is supported if its payload data type is field list or 
+is a map of field lists. </p>
+<p>The user selects a service name, message model type, and RIC. The 
+service name selection controls the message model types available using 
+information from the service <b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#DIRECTORY directory}</font>-&gt;<font size="2" face="Courier New">{@linkplain 
+com.reuters.rfa.rdm.RDMService.Info INFO filter entry}</font></b>, <b>
+<font size="2" face="Courier New">{@linkplain 
+com.reuters.rfa.rdm.RDMService.Info#Capabilities Capabilities element}</font></b>. 
+If the application receives data, then a field list or map of field lists are displayed in 
+tables. The display is updated in real time as data and state change events are received for each record and field. 
+</p>
+<p>
+
+For the Login, the user can Reissue a request. As part of the Reissue,
+the user can optionally request:
+<li>refresh (on the login)</li>
+<li>pause (all items associated with the login).</li>
+<br>If a reissue is requested and the Pause checkBox is not selected,
+any paused items will be resumed (a.k.a. not paused).
+<p>
+For the opened item(s), the user can Reissue a request or Close the item. 
+As part of the Reissue, the user can optionally request:
+<li>refresh</li>
+<li>pause</li>
+<li>change priority</li>
+<br>If a reissue is requested and the Pause checkBox is not selected,
+the item will be resumed (a.k.a. not paused).
+ 
+<p>
+Here are a few screen shots.
+<p>
+<img src="{@docRoot}/../../portal/images/viewermarketprice.jpg">
+<p>
+<img src="{@docRoot}/../../portal/images/viewermarketbyorder.jpg">
+
+<p>
+This application uses the <b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.example.framework.sub framework.sub}</font></b> for context initialization.
+</p>
+
+<p>The <b>Viewer</b> application consists of several distinct components:<ul>
+<li><b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.gui.viewer.ViewerPanel ViewerPanel}</font></b>: 
+Creates the main display container, the <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.utility.gui.ServiceSelector 
+ServiceSelector}</font></b>, message model type selector, JTables, and other GUI 
+components.</li>
+<li><b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.gui.viewer.MapValues MapValues}</font></b>, 
+<b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.gui.viewer.FieldListValues FieldListValues}</font></b>, and 
+<font size="2" face="Courier New"><b>{@link com.reuters.rfa.example.omm.gui.viewer.FieldValue 
+FieldValu</b></font><b><font size="2" face="Courier New">e}</font></b>: Classes which storage strings for OMM values to 
+display and which to keep 
+track of when values are updated.</li>
+<li><b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.gui.viewer.FadingTableModel FadingTableModel}</font></b>, 
+<b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.gui.viewer.FieldListTableModel FieldListTableModel}</font></b>, 
+and <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.gui.viewer.MapTableModel MapTableModel}</font></b>: JTables's 
+table models for organizing OMM data into display form.</li>
+<li><b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.gui.viewer.OMMClient OMMClient}</font></b>: 
+The event 
+client for processing OMM data and passing it to the table models.</li>
+</ul>
+</p>
+
+<p>The example uses the following command line configuration parameters:
+<ul>
+<li><b>help</b>: Displays help information and exit.  The default is <b>
+<font size="2" face="Courier New">false</font></b>.
+<li><b>session</b>: Sets the consumer session.  The default is <b>
+<font size="2" face="Courier New">myNamespace::mySession</font></b>.
+<li><b>fontSize</b>: Sets the display's font size.  The default is <b>
+<font size="2" face="Courier New">10</font></b>.
+<li><b>font</b>: Sets the font name (or logical font name). The default is the 
+logical font name <b><font size="2" face="Courier New">Dialog</font></b>.
+<li><b>sort</b>: Sets whether to support sorting with JDK 1.6 or later (does not perform well for large tables).  The default is 
+<b><font size="2" face="Courier New">false</font></b>.
+<li><b>user</b>: Sets the DACS username for login. The default is the value from 
+the <b>user.name</b> property or <b><font size="2" face="Courier New">guest</font></b>.</li>
+<li><b>position</b>: Sets the DACS position for login. The default is the local 
+host or <b><font size="2" face="Courier New">1.1.1.1/net</font></b>.</li>
+<li><b>application</b>: Sets the DACS application ID for login. The default is 
+<b><font size="2" face="Courier New">256</font></b>.</li>
+<li><b>requestPARSupport</b>: Sets whether to encode the login request with <b>
+<font size="2" face="Courier New">SupportPauseResume = 1</font></b>. The default is 
+<b><font size="2" face="Courier New">true</font></b>.</li>			
+<li><b>fileDictionary</b>: Sets whether to load the dictionary from file. The default is
+<b><font size="2" face="Courier New">false</font></b>.</li>
+<li><b>rdmFieldDictionary</b>: Sets the RDMFieldDictionary filename. The default is 
+<b><font size="2" face="Courier New">/var/triarch/RDMFieldDictionary</font></b>. </li>
+<li><b>enumType</b>: Specifies the <b>enumtype.def</b> filename. The default is
+<b><font size="2" face="Courier New">/var/triarch/enumtype.def</font></b>.</li>
+<li><b>type</b>: Sets the type of subscriber connection. It can be either <b>
+<font size="2" face="Courier New">OMM</font></b> or
+<font size="2" face="Courier New"><b>MarketData</b></font> but for this example, 
+it must be <font size="2" face="Courier New"><b>OMM</b></font> (which is the 
+default setting).<li><b>debug</b>: Enables debug tracing. The default is <b>
+<font size="2" face="Courier New">false</font></b>.</li>
+</ul>
+
+</p>
+
+<p><font color="#FF0000"><b>Note: This example is not fully optimized for GUI 
+display and might not handle large order books that  
+frequently update.</b> </font>This example shows only how data 
+is structured and how it can be displayed, not to display it in the most 
+efficient way possible. An optimized order book display would refresh the 
+table only if data was viewable. It would also store data in persistent 
+buffers instead of temporary strings that result in a lot of garbage objects 
+when the data is updated. Strings would only be generated from the buffers 
+as needed.  Also, implementing table sorting in the application instead of <b>
+<font size="2" face="Courier New">javax.swing.table.TableRowSorter</font></b> is more accurate (by using value instead 
+of string) and more efficient.</p>
+<p>The <b>Viewer</b> application can be run with the following command:</p>
+<p><b><font size="2" face="Courier New">&nbsp;&nbsp;&nbsp; java com.reuters.rfa.example.omm.gui.viewer.Viewer -session myNamespace::rsslSession</font></b></p>
+<p>
+@see com.reuters.rfa.example.framework.sub.SubAppContext 
+</body>

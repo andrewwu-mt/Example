@@ -1,0 +1,44 @@
+<body>
+The following section contains a hybrid application that is both an OMM consumer and a non-interactive OMM provider. 
+<p>
+The <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.hybridni.HybridNIDemo HybridNIDemo}</font></b> demonstrates how to write an application that is both an OMM consumer and a 
+non-interactive OMM provider. 
+The OMM provider side <b><font size="2" face="Courier New">{@link com.reuters.rfa.session.omm.OMMProvider OMMProvider}</font></b> 
+of <b>HybridNIDemo</b> logs into the source distributor.
+The OMM consumer side <b><font size="2" face="Courier New">{@link com.reuters.rfa.session.omm.OMMConsumer OMMConsumer}</font></b> logs into a provider application, requests directory/items, and publishes them to the source distributor.
+</p>
+<p>
+HybridNIDemo supports the following command line arguments:
+<ul>
+<li><b><font size="2" face="Courier New">runTime</font></b>: Sets the number of seconds that application will run. The default is 600.
+<li><b><font size="2" face="Courier New">session</font></b>: The Session must contain at least two connections: 
+one RSSL and the other RSSL_NIPROV. The default is <b>
+<font size="2" face="Courier New">myNamespace::hybridNISession</font></b>.<li><b>
+<font size="2" face="Courier New">itemName</font></b>: Sets the list of items to open separated by '<b><font face="Courier New" size="2">,</font></b>'. 
+The default is <font size="2" face="Courier New"><b>TRI.N</b></font>.<li><b>
+<font size="2" face="Courier New">mmt</font></b>: Sets the Message Model Type. 
+The default is <font size="2" face="Courier New"><b>MARKET_PRICE</b></font>.</li>
+<li><b><font size="2" face="Courier New">serviceName</font></b>: Sets the service used for requests. 
+The default is <font size="2" face="Courier New"><b>DIRECT_FEED</b></font>.</li>
+<li><b><font size="2" face="Courier New">attribInfoInUpdates</font></b>: Sets 
+the provider application to send <b>OMMAttribInfo</b> in its update/status messages. 
+The default is <font size="2" face="Courier New"><b>false</b></font>.</li>
+<li><b><font size="2" face="Courier New">user</font></b>: Sets the DACS username for Login. 
+The default is the value of&nbsp;the user.name system property.</li>
+<li><b><font size="2" face="Courier New">position</font></b>: Sets the DACS position for Login. 
+The default is IP address/hostname.</li>
+<li><b><font size="2" face="Courier New">application</font></b>: Sets the DACS 
+application ID for Login. The default is <font size="2" face="Courier New"><b>256</b></font>.</li>
+</ul>
+<p></p>
+<p>You can run the <b>HybridNIDemo</b> as an application with the following command:</p>
+<p>&nbsp; <b>&nbsp; java com.reuters.rfa.example.omm.hybridni.HybridNIDemo 
+-runTime 50 -session myNamespace::localOMMHybridNI -serviceName DIRECT_FEED  -itemName IBM.N,MSFT.O  -user "username"</b></p>
+<p>Assumptions:</p>
+<li>The provider application, <b>HybridNIDemo</b>, and the source distributor must use the <b>same service</b> name.
+<li>You must limit the number of <b>RSSL_NIPROV </b> connections configured in the session to one. 
+</body>
+
+
+
+

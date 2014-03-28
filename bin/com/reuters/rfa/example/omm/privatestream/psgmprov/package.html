@@ -1,0 +1,41 @@
+<body>
+<p>StarterProvider_PrivateStreamGenericMsg is a simple interactive server provider example to demonstrate
+ how to interactively publish and receive generic messages using Private Streams and
+ the Open Message Model.  
+ 
+ This application is single-threaded server application. StarterProvider_PrivateStreamGenericMsg
+ can ONLY connect to the example application StarterConsumer_PrivateStreamGenericMsg 
+ {@link com.reuters.rfa.example.omm.privatestream.psgmcons StarterConsumer_PrivateStreamGenericMsg}. 
+ Currently, this application provides a Login, Directory, and generic messages on 
+ an Private Streams. It also receives and process generic messages from the consuming application.  
+ It can be easily extended to provide other types of data.
+ 
+ The StarterConsumer_PrivateStreamGenericMsg will initiate a bidirectional conversation using generic messages. 
+ After the StarterProvider_PrivateStreamGenericMsg receives an initial generic message, the StarterConsumer_PrivateStreamGenericMsg
+ sends a generic message every 5 seconds, StarterProvider_PrivateStreamGenericMsg then responds with a generic message 
+ back to the consuming application.
+</p>
+
+<b>StarterProvider_PrivateStreamGenericMsg provides examples of how to:</b>
+<ul>
+  <li>Create a Session and an EventQueue 
+  <li>Create an OMMProvider event source 
+  <li>Listen to client connection
+  <li>Properly respond to a PrivateStream or non Private stream request 
+  <li>Handle and send generic messages
+  <li>Dispatch events from an EventQueue 
+  <li>Cleanup a Session 
+</ul>
+
+<p><b>The StarterProvider_PrivateStreamGenericMsg application currently supports the following command line parameters.</b></p>
+<ul>
+  <li><b>debug</b> - enable detailed logging for RFA (default is &quot;false&quot;)</li>
+ <li><b>provSession</b> - name of Provider session. (default is &quot;myNamespace::provSession&quot;)</li>
+ <li><b>runTime</b> - How long (in seconds) application should run before exiting (default is &quot;600&quot;)</li>
+</ul>
+
+<p><b>The example can be run as an application with the following commands:</b></p>
+<p>java com.reuters.rfa.example.omm.privatestream.psgmprov.StarterProvider_PrivateStreamGenericMsg</p>
+ 
+</body>
+

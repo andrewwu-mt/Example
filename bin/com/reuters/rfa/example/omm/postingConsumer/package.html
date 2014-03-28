@@ -1,0 +1,73 @@
+<body>
+<p><b>StarterConsumer_Post</b> demonstrates how to subscribe and post to a provider 
+application. 
+It can connect to an RFA OMMProvider / P2PS / RDFD using an RSSL connection. </p>
+
+This application does the following:
+<ul>
+  <li>Registers for Login
+  <li>Handles Login response
+  <li>Registers for item(s) request with the 
+  <b><font face="Courier New" size="2">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_PRICE MARKET_PRICE}</font></b> model
+  <li>Uses <b><font face="Courier New" size="2">{@link com.reuters.rfa.example.utility.GenericOMMParser GenericOMMParser}</font></b> to parse 
+	<b><font face="Courier New" size="2">{@link com.reuters.rfa.omm.OMMMsg OMMMsg}</font></b>
+  <li>Handles <b><font face="Courier New" size="2">{@link com.reuters.rfa.omm.OMMMsg OMMMsg}</font></b> received via 
+	<b><font face="Courier New" size="2">{@link com.reuters.rfa.session.omm.OMMItemEvent OMMtemEvent}</font></b><li>Identifies if 
+	the posting feature is supported.<li>
+  Reads an input file with post details. Based on the input, it posts OMM Data 
+  or OMMMsg to a 
+  provider application.<li>Processes Ack messages received from a provider 
+  application.</ul>
+
+<p>The <b>StarterConsumer_Post</b> application supports the following command 
+line arguments:</p>
+<ul>
+  <li><b>debug</b>: Enables detailed logging for RFA. The default is <b>
+	<font face="Courier New" size="2">false</font></b>.</li>
+ <li><b>session</b>: Sets the name of the consumer session to acquire.
+ Its connection list should include at least one RSSL connection.&nbsp;The 
+	default is <b><font face="Courier New" size="2">myNamespace::mySession</font></b>.</li>
+ <li><b>serviceName</b>: Sets the name of the source directory to use. The 
+	default is <b><font face="Courier New" size="2">DIRECT_FEED</font></b>.</li>
+ <li><b>itemName</b>: Sets a comma-delimited list of items. The default is <b>
+	<font face="Courier New" size="2">TRI.N</font></b>.<br>
+	<b>Note:</b> Commas (<b><font face="Courier New" size="2">,</font></b>)are 
+	valid characters in a RIC name. If any RIC names have a comma, you must 
+	modify the application.</li>
+ <li><b>attribInfoInUpdates</b>: Sets the example to tell the provider to send
+	<b>OMMAttribInfo</b> with update and status messages. The default is <b>
+	<font face="Courier New" size="2">false</font></b>.</li>
+ <li><b>user</b>: Sets the DACS username for Login. The default is the value of&nbsp;the user.name 
+	system property.</li>
+ <li><b>position</b>: Sets the DACS position for Login. The default is IP 
+	address/hostname.</li>
+ <li><b>application</b>: Sets the DACS application ID for Login. The default is
+	<b><font face="Courier New" size="2">256</font></b>.</li>
+ <li><b>rdmFieldDictionary</b>: Sets the RDM Field dictionary name and location.&nbspThe 
+	default is <b><font face="Courier New" size="2">/var/triarch/RDMFieldDictionary</font></b>.</li>
+ <li><b>enumType</b>: Sets the enum dictionary name and location.&nbsp. The 
+	default is <b><font face="Courier New" size="2">/var/triarch/enumtype.def</font></b>.</li>
+ <li><b>runTime</b>: Sets the duration (in seconds) for which the application runs before exiting. 
+	The default is <b><font face="Courier New" size="2">600</font></b>.</li>
+ <li><b>openItemStreams: </b>Sets the example to open Items Streams by sending item requests. 
+	The default is <b><font face="Courier New" size="2">true</font></b>.</li>
+ <li><b>postInputFileName:</b> Specifies the name of the input file with items to be posted. The file 
+ has all information necessary to do a post&nbsp;. The default is <b>
+	<font face="Courier New" size="2">/postInput.txt</font></b>.</li>
+  <li><b>dumpPost</b>: Dump the post information read from the file to the 
+  console. The default is <b><font face="Courier New" size="2">false</font></b>.</li>
+  <li><b>sendPostAfterItemOpen</b>: Send OnStream/OffStream Posts after all items are open. Otherwise it is sent when 
+	the
+  login is granted. The default is <b><font face="Courier New" size="2">true</font></b>.</li>
+</ul>
+
+<p>The example can be run as an application with the following commands:</p>
+<p>&nbsp;&nbsp;&nbsp; <b><font face="Courier New" size="2">com.reuters.rfa.example.omm.postingConsumer.StarterConsumer_Post 
+-itemName IBM.N,MSFT.O -serviceName DIRECT_FEED -postInputFileName
+C:\post_input.txt -dumpPost false 
+-openItemStreams true - sendPostAfterItemOpen true</font></b></p>
+ 
+<p><b>Note: </b>An OMM consumer application is not required make a request for directory.&nbsp; 
+As a result this example does not request a DIRECTORY and the user needs to know 
+the service name that is available</p>
+</body>

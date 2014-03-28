@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>RFA QuoteList Applet Example</TITLE>
+</HEAD>
+<BODY>
+<DIV ALIGN="center">
+<H1>RFA QuoteList Applet Example</H1>
+<STRONG>The configurations can be changed by editing this html file.</STRONG>
+<BR>
+<APPLET CODEBASE="." CODE="com.reuters.rfa.example.omm.gui.quotelist.QuoteList.class" ARCHIVE="rfaj_applet_example.jar,signed_rfa.jar" WIDTH=600 HEIGHT=450>
+
+    <!--Parameters for configuring a database of configuration used to initialize the RFA.
+         Format: ( each configuration is separated by pipe "|" )
+            config1=value1 |
+            config2=value2 |
+            config3=value3
+    -->
+    <PARAM NAME="configDb" value="
+      example.Sessions.rssllocal.connectionList=rssllocal    |
+      example.Connections.rssllocal.connectionType=RSSL      |
+      example.Connections.rssllocal.serverList=localhost     |
+      example.Connections.rssllocal.portNumber=14002         |
+      example.Connections.rssllocal.logFileName=none
+    ">
+
+    <!--Other configurations
+          if parameter does not exist, RFA will use default configuration
+
+        Name                Default Value                           Description
+        ====                =============                           ===========
+        fontSize            10                                      font size
+        font                Dialog                                  font name
+        serviceName                                                 service name to request
+        fieldNames          DSPLY_NAME,TRDPRC_1,NETCHNG_1,ACVOL_1   fields to display
+        itemNames                                                   List of items to preload separated by ','
+        debug               false                                   enable debug tracing
+        session             myNamespace::mySession                  Session name to use
+        user                machine username                        DACS username for login
+        position            machine ip address                      DACS position for login
+        application         256                                     DACS application ID for login 
+    -->
+    <PARAM NAME="session" VALUE ="example::rssllocal">
+
+</APPLET>
+</DIV>
+</BODY>
+</HTML>
+

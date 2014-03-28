@@ -1,0 +1,46 @@
+<body>
+<p>StarterProvider_NonInteractive is a simple provider example to demonstrate how to publish Reuters Domain Model data using
+ the Open Message Model.  This application is single-threaded client application.   The applications connects 
+ and logs in to a ADH or P2PS POP.   A TimerIntSpec is used to wake up the dispatch thread so 
+ it can send updates.
+  
+ Currently, the StarterProvider_NonInteractive application provides Service Directories and Market Price.  
+ It can be easily extended to provide other message model types.
+</p>
+
+<b>StarterProvider_NonInteractive provides examples of how to:</b>
+<ul>
+  <li>Create a Session and an EventQueue 
+  <li>Create an OMMProvider event source 
+  <li>Register a Login request message 
+  <li>Dispatch events from an EventQueue 
+  <li>Cleanup a Session 
+</ul>
+
+<p><b>The StarterProvider_NonInteractive application currently supports the following command line parameters.</b></p>
+<ul>
+ <li><b>debug</b> - enable detailed logging for RFA (default is &quot;false&quot;)</li>
+ <li><b>provSession</b> - name of Provider session. (default is &quot;myNamespace::provSession&quot;)</li>
+ <li><b>serviceName</b> - Service name for the SrcDirectory response. (default is &quot;DIRECT_FEED&quot;)</li>
+  <li><b>itemName</b> - List of items to open separated by ','. (default is &quot;TRI.N&quot;) 
+  <b>Please note that ',' is a valid character for RIC name. The application need to be modified if RIC names have ','.</b></li>
+ <li><b>user</b>  - DACS username for Login (default is value of&nbsp; user.name system property)</li>
+ <li><b>position</b> - DACS position for login for Login (default is IP address/hostname)</li>
+ <li><b>application</b> - DACS application ID for Login (default is &quot;256&quot;)</li> 
+ <li><b>updateInterval</b> - Update interval in seconds. (default is &quot;2&quot;)</li>
+ <li><b>updateRate</b> - Update rate per interval. (default is &quot;2&quot;)</li>
+ <li><b>sendStatus</b> - Send Status Messages (default is &quot;false&quot;)</li>
+ <li><b>serviceInfoOnUpdates</b> - The serviceInfo to be set in attribInfo on update messages. The serviceInfo can 
+ either be a serviceID, serviceName or nothing. e.g. 1, DIRECT_FEED etc (default is ""; 
+ i.e. Updates do not contain serviceInfo)</li>
+ <li><b>dacsServiceId</b> - The serviceID to generate DACS lock for PE(s); </br>
+ This can be obtained from Open DACS or a DACS administrator ( default is "1" )</li>
+ <li><b>refreshPE</b> - Comma separated PEs for refresh messages; This requires dacsServiceId (default is ""; example 6566, 451)</li>
+ <li><b>updatePE</b> - Comma separated PEs for update messages; This requires dacsServiceId (default is ""; example 6566, 451)</li>
+ <li><b>statusPE</b> - Comma separated PEs for status messages; This requires dacsServiceId (default is ""; example 6566, 451)</li>
+ <li><b>runTime</b> - How long (in seconds) application should run before exiting (default is &quot;600&quot;)</li>
+</ul>
+<p><b>The example can be run as an application with the following commands:</b></p>
+<p>java com.reuters.rfa.example.omm.provni.StarterProvider_NonInteractive -serviceName DIRECT_FEED</p>
+ 
+</body>

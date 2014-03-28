@@ -1,0 +1,57 @@
+<body>
+<p><b>StarterProvider_BatchView</b> is a simple provider server example demonstrating 
+ how to publish Reuters Domain Model data using the Open Message Model.&nbsp;One thread dispatches 
+ a client session connection request, item requests, and timer events.  Updates are sent when the timer event
+ is received.  A consumer application (source distributor, P2PS or RFA OMMConsumer) 
+ can connect to the server to request data. 
+
+ Currently, the <b>StarterProvider_BatchView</b> application provides Logins, Service Directories, Dictionaries, and Market Price.  
+ It can be easily extended to provide other message model types.
+
+ Update conflation logic has not been implemented. 
+
+ <b>StarterProvider_BatchView</b> 
+ supports batch, view and PAR (Pause and Resume), and it sends 
+ <b><font size="2" face="Courier New">SupportBatchRequests</font></b>,
+ <b><font size="2" face="Courier New">SupportViewRequests</font></b>, and
+ <b><font size="2" face="Courier New">SupportOptimizedPauseResume</font></b> in the attrib info of login response.
+ If it receives a view item request, it sends an image/snapshot and update for those fields only.   
+</p>
+
+<b>StarterProvider_BatchView</b>
+provides examples of how to:
+<ul>
+  <li>Create a Session and an EventQueue 
+  <li>Create an OMMProvider event source 
+  <li>Listen to client connections 
+  <li>Dispatch events from an EventQueue 
+  <li>Cleanup a Session</ul>
+
+<p>The <b>StarterProvider_BatchView</b> application currently supports the following 
+command line parameters:</p>
+<ul>
+  <li><b>debug</b>: Enables detailed logging for RFA. The default is <b>
+	<font size="2" face="Courier New">false</font></b>.</li>
+ <li><b>provSession</b>: Sets the name of Provider session. The default is <b>
+	<font size="2" face="Courier New">myNamespace::provSession</font></b>.</li>
+ <li><b>serviceName</b>: Sets the service name for the SrcDirectory response. 
+	The default is <b><font size="2" face="Courier New">DIRECT_FEED</font></b>.</li>
+ <li><b>listenerName</b>: Sets the unique name, specifying a connection on which 
+	to listen. The default is <b><font size="2" face="Courier New">&quot;&quot;(null)</font></b>. 
+ <li><b>updateInterval</b>: Sets the update interval in seconds. The default is
+	<b><font size="2" face="Courier New">1</font></b>.</li>
+ <li><b>updateRate</b>: Sets the update rate per interval. The default is <b>
+	<font size="2" face="Courier New">2</font></b>.</li>
+ <li><b>rdmFieldDictionary</b>: Sets the RDM Field dictionary name and location.&nbspThe default is
+	<b><font size="2" face="Courier New">/var/triarch/RDMFieldDictionary</font></b>.</li>
+ <li><b>enumType</b>: Sets the enum dictionary name and location.&nbspThe default is
+	<b><font size="2" face="Courier New">/var/triarch/enumtype.def</font></b>.</li>
+ <li><b>runTime</b>: Sets the duration (in seconds) for which the application 
+	runs before exiting. The default is <b><font size="2" face="Courier New">600</font></b>.</li>
+</ul>
+
+<p>You can run the example as an application with the following commands:</p>
+<p>&nbsp;&nbsp;&nbsp; <b><font size="2" face="Courier New">java com.reuters.rfa.example.omm.batchviewprov.StarterProvider_BatchView -serviceName DIRECT_FEED</font></b></p>
+ 
+</body>
+

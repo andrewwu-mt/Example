@@ -1,0 +1,64 @@
+<body>
+This section contains an advanced hybrid application that is both an OMM consumer and an OMM provider. 
+<p>
+The <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.hybrid.advanced.AdvancedHybridDemo AdvancedHybridDemo}</font></b> demonstrates how to write an application that is both an OMM consumer and an 
+OMM provider. The OMM provider side of <b>AdvancedHybridDemo</b> listens to a request, and 
+passes the request to the OMM consumer side of <b>AdvancedHybridDemo</b>. The OMM consumer 
+side will create <b><font size="2" face="Courier New">{@link com.reuters.rfa.session.omm.OMMConsumer OMMConsumer}</font></b> everytime it 
+receives a <b><font size="2" face="Courier New">{@link com.reuters.rfa.rdm.RDMMsgTypes#LOGIN LOGIN}</font></b> request. 
+</p>
+<p>
+The <b>AdvancedHybridDemo</b> will make <b><font size="2" face="Courier New">{@link com.reuters.rfa.rdm.RDMMsgTypes#DIRECTORY DIRECTORY}</font></b> upon receiving 
+a LOGIN request to load data dictionaries for each service provided by the source application. 
+While the dictionaries are loading, <b>AdvancedHybridDemo</b> puts any item request 
+it receives into a pending state and sends them to the source application after the dictionaries 
+load.
+</p>
+<p>
+<b>AdvancedHybridDemo</b> also manages item groups. It will fanout group status and forward it to the client application.
+</p>
+
+<p>
+<b>AdvancedHybridDemo</b> supports the following command line arguments:<ul>
+<li>
+<font face="Courier New" size="2">
+<b>runTime</b></font>: Sets the number of seconds that the application runs. The default is 
+<font face="Courier New" size="2"><b>600</b></font>.
+<li>
+<b><font face="Courier New" size="2">session</font></b>: Session must contain at least two connections 
+(at least one must be RSSL and another must be RSSL_PROV). The default is
+<font face="Courier New" size="2"><b>myNamespace::hybridSession</b></font>.
+<li>
+<b><font face="Courier New" size="2">rdmFieldDictionary</font></b>: Sets the RDMField dictionary name and location. The default is 
+<font face="Courier New" size="2"><b>/var/triarch/R</b></font><font face="Courier New" size="2"><b>DMFieldDictionary</b></font>.<li>
+<b><font face="Courier New" size="2">enumType</font></b>: Sets the RDMEnum dictionary name and location. The default is 
+<font face="Courier New" size="2"><b>/var/triarch/enumType.def</b></font>.<li>
+<b><font face="Courier New" size="2">useReencoder</font></b>: Sets whether to re-encode messages before passing 
+them through the source/sink application. The default is 
+<font face="Courier New" size="2"><b>true</b></font>.
+<li>
+<b><font face="Courier New" size="2">useEncodeData</font></b>: Enables
+<font face="Courier New" size="2"><b>{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder#setEncodeData(boolean) useEncodeData}</b></font>
+         in <font face="Courier New" size="2"><b>{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder OMMMsgReencoder}</b></font> when re-encoding a message. 
+		 The default is <font face="Courier New" size="2"><b>false</b></font>.
+<li>
+<b><font face="Courier New" size="2">useEncodeString</font></b>: Enables
+<font face="Courier New" size="2"><b>{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder#setEncodeString(boolean) useEncodeString}</b></font>
+         in <font face="Courier New" size="2"><b>{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder OMMMsgReencoder}</b></font> when re-encoding a message. 
+		 The default is <font face="Courier New" size="2"><b>false</b></font>.
+<li>
+<b><font face="Courier New" size="2">usePreEncodeDataDefs</font></b>: Enables
+<font face="Courier New" size="2"><b>{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder#setPreEncodeDataDefs(boolean) usePreEncodeDataDefs}</b></font>
+         in <font face="Courier New" size="2"><b>{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder OMMMsgReencoder}</b></font> when re-encoding a message. 
+		 The default is <font face="Courier New" size="2"><b>false</b></font>.
+</ul>
+<p></p>
+<p>You can run <b>AdvancedHybridDemo</b> as an application by using the following command:</p>
+<p><b><font size="2" face="Courier New">&nbsp;&nbsp;&nbsp; java com.reuters.rfa.example.omm.hybrid.advanced.AdvancedHybridDemo
+</font></b> </p>
+@see com.reuters.rfa.example.omm.hybrid
+@see com.reuters.rfa.example.omm.hybrid.simple
+@see com.reuters.rfa.example.omm.itemgroups
+
+</body>
+

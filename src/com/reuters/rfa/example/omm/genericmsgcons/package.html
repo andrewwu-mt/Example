@@ -1,0 +1,43 @@
+<body>
+<p><b>StarterConsumer_GenericMsg</b> demonstrates subscribing to a 'custom' Domain Model to send and
+receive generic messages using RFA's OMM Consumer model. It can connect ONLY to the example application
+<b>OMMGenericMsgProviderDemo</b> <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.genericmsgprov StarterProvider_GenericMsg}</font></b>. 
+  </p>
+
+This application does the following:
+<ul>
+  <li>Registers for Login
+  <li>Handles the Login response
+  <li>Registers/subscribes for one item through RFA
+  <li>Initializes and continues a synchronous bidirectional conversation using generic messages with the example application
+	<b>OMMGenericMsgProviderDemo</b>.
+  <li>Use <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.utility.GenericOMMParser GenericOMMParser}</font></b> to parse 
+	<b><font size="2" face="Courier New">{@link com.reuters.rfa.omm.OMMMsg OMMMsg}
+	</font></b>
+</ul>
+
+<p>The <b>StarterConsumer</b> application currently supports the following command line arguments.</p>
+<ul>
+ <li><b><font size="2" face="Courier New">debug</font></b> - enable detailed logging for RFA. 
+	The default is <b><font size="2" face="Courier New">false</font></b>.</li>
+ <li><b><font size="2" face="Courier New">session</font></b> - name of consumer session to acquire.
+ Its connection list should include  one RSSL connection to <b>OMMGenericMsgProvDemo</b>. 
+	The default is <b><font size="2" face="Courier New">RSSLNamespace::localConsumerSession</font></b>.</li>
+ <li><b><font size="2" face="Courier New">user</font></b>  - DACS username for Login. 
+	The default is value of&nbsp; user.name system property)</li>
+ <li><b><font size="2" face="Courier New">position</font></b> - DACS position for login for Login. 
+	The default is IP address/hostname)</li>
+ <li><b><font size="2" face="Courier New">application</font></b> - DACS 
+	application ID for Login. The default is <b>
+	<font size="2" face="Courier New">256</font></b>.</li>
+ <li><b><font size="2" face="Courier New">runTime</font></b> - How long (in 
+	seconds) application should run before exiting. The default is <b>
+	<font size="2" face="Courier New">600</font></b>.</li>
+</ul>
+
+<p>You can run this example as an application with the following commands:</p>
+<p>&nbsp;&nbsp;&nbsp; <b><font size="2" face="Courier New">java com.reuters.rfa.example.omm.genericmsgcons.StarterConsumer_GenericMsg
+</font></b> </p>
+ 
+</body>
+

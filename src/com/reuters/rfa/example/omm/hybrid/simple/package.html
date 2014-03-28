@@ -1,0 +1,55 @@
+<body>
+The following contains a simple hybrid application, which is both an OMM consumer and an OMM provider. 
+
+<p>The <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.hybrid.simple.SimpleHybridDemo SimpleHybridDemo}</font></b> 
+is intended to demonstrate how to write an application that is both an OMM consumer and an 
+OMM provider. <b>SimpleHybridDemo</b>'s provider side listens to a request, 
+and passes the request to its OMM consumer side. Every time it receives a <b>
+<font size="2" face="Courier New">{@link com.reuters.rfa.rdm.RDMMsgTypes LOGIN}</font></b> 
+request, the OMM consumer 
+side creates <b><font size="2" face="Courier New">{@link com.reuters.rfa.session.omm.OMMConsumer 
+OMMConsumer}</font></b>.
+</p>
+
+<p>
+<b>SimpleHybridDemo</b> currently supports the following command line 
+arguments:<ul>
+<li>
+<b><font size="2" face="Courier New">runTime</font></b>: Sets the number of seconds 
+for which the application will run. The default is <b>
+<font face="Courier New" size="2">600</font></b>.
+<li>
+<b><font size="2" face="Courier New">session</font></b>: The session must contain at least two connections 
+(one RSSL and one RSSL_PROV). The default is <b>
+<font size="2" face="Courier New">myNamespace::hybridSession</font></b>.<li>
+<b><font size="2" face="Courier New">rdmFieldDictionary</font></b>: Sets the RDMField dictionary name and location. The default is 
+<font size="2" face="Courier New"><b>/var/triarch/RDMFieldDictionary</b></font>.<li>
+<b><font size="2" face="Courier New">enumType</font></b>: Sets the RDMEnum dictionary name and location. The default is 
+<b><font size="2" face="Courier New">/var/triarch/enumType.def</font></b>.
+<li>
+<b><font size="2" face="Courier New">useReencoder</font></b>: Sets whether to 
+re-encode messages before passing them through the source/sink application. The default is
+<font size="2" face="Courier New"><b>true</b></font>.
+<li>
+<b><font size="2" face="Courier New">useEncodeData</font></b>: Enables <b>
+<font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder#setEncodeData(boolean) useEncodeData}</font></b>
+         in <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder OMMMsgReencoder}</font></b> when re-encoding a message. 
+		 The default is <b><font size="2" face="Courier New">false</font></b>.
+<li>
+<b><font size="2" face="Courier New">useEncodeString</font></b>: Enables <b>
+<font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder#setEncodeString(boolean) useEncodeString}</font></b>
+         in <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder OMMMsgReencoder}</font></b> when re-encoding a message. 
+		 The default is <b><font size="2" face="Courier New">false</font></b>.
+<li>
+<b><font size="2" face="Courier New">usePreEncodeDataDefs</font></b>: Enables <b>
+<font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder#setPreEncodeDataDefs(boolean) usePreEncodeDataDefs}</font></b>
+         in <b><font size="2" face="Courier New">{@link com.reuters.rfa.example.omm.hybrid.OMMMsgReencoder OMMMsgReencoder}</font></b> when re-encoding a message. 
+		 The default is <b><font size="2" face="Courier New">false</font></b>.
+</ul>
+<p>You can run the <b>SimpleHybridDemo</b> as an application by using the following command: </p>
+<p>&nbsp;&nbsp;&nbsp; <b><font size="2" face="Courier New">java com.reuters.rfa.example.omm.hybrid.simple.SimpleHybridDemo</font></b> </p>
+@see com.reuters.rfa.example.omm.hybrid 
+@see com.reuters.rfa.example.omm.hybrid.advanced
+
+</body>
+

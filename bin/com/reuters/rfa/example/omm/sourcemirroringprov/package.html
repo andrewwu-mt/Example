@@ -1,0 +1,45 @@
+<body>
+<p><b>StarterProvider_SourceMirroring</b> is a simple interactive server provider example 
+that 
+demonstrates&nbsp;how to receive generic messages with the <b>SourceMirroringMode</b>.<p><b>Package</b>: 
+<b><font size="2" face="Courier New">com.reuters.rfa.example.omm.sourcemirroringprov</font></b></p>
+<p><b>Source code location</b>: <b>$RFA/Examples/com/reuters/rfa/example/omm/sourcemirroringprov</b></p>
+
+<p><b>StarterProvider_SourceMirroring</b> provides examples of how to:
+
+<ul>
+  <li>Provide Login, Directory, and Generic Messages on item streams</li>
+  <li>Include <b>AcceptingCustomerStatus</b> in the Directory response</li>
+  <li>Receive and process generic messages with Consumer Status Mode</li>  
+  <li>Receive and process generic messages from a consumer application</li>
+</ul>
+
+<table border="0" width="100%" cellspacing="0">
+  <tr>
+    <td bgcolor="#0000AA" width="67%"><strong><a name="Running">
+	<font size="3" color="#FFFFFF">Running the
+      Example</font></a></strong></td>
+  </tr>
+</table>
+
+<p>This example uses the following command line parameters:
+
+<ul>
+  <li><b><font face="Courier New" size="2">debu</font><font face="Courier New" size="2">g</font></b>: Enables debug tracing. The default is
+	<font face="Courier New" size="2"><b>false</b></font>.</li>
+  <li><b><font face="Courier New" size="2">provsession</font></b>: Specifies the name of the session to 
+	acquire. The default is <font face="Courier New" size="2"><b>RSSLNamespace::localProviderSession</b></font>.</li>
+  <li><b><font face="Courier New" size="2">runTime</font></b>: Sets the number of seconds for which the program runs before exiting. 
+	The default is <font face="Courier New" size="2"><b>600</b></font>.</li>
+	<li><b><font face="Courier New" size="2">submitInterval</font></b>: Sets the update interval (in seconds). The 
+	default is <font face="Courier New" size="2"><b>1</b></font>.</li>
+	<li><b><font face="Courier New" size="2">acceptingConsumerStatus</font></b>: Sets whether the provider can handle 
+  Consumer Status Generic Messages. The default is
+	<font face="Courier New" size="2"><b>1</b></font>.</li>
+</ul>
+
+<p>You can run this example as an application with the following command:</p>
+
+<p><b><font face="Courier New" size="2">&nbsp;&nbsp;&nbsp; ja</font></b><font face="Courier New" size="2"><b>va com.reuters.rfa.example.omm.sourcemirroringprov.StarterProvider_SourceMirroring -acceptingConsumerStatus 1</b></font></p>
+
+</body>

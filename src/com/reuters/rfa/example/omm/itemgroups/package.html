@@ -1,0 +1,44 @@
+<body>
+<p>The <b>ItemGroupsDemo</b> example demonstrates how to manage item groups in a consumer application.
+<b>ItemGroupsDemo</b> currently supports the following command line configuration parameters:</p>
+<ul>
+ <li><b><font size="2" face="Courier New">session</font></b>: Sets the name of 
+	the consumer session to acquire.
+ Its connection list should include at least one RSSL connection.&nbsp;By default 
+	this is: <font size="2" face="Courier New"><b>myNamespace::mySession</b></font>.</li>
+ <li><b><font size="2" face="Courier New">serviceName</font></b>: Sets the name of 
+	the source directory to use. By default, this is <b>
+	<font size="2" face="Courier New">DIRECT_FEED</font></b>.</li>
+ <li><b><font size="2" face="Courier New">itemName</font></b>: Sets the 
+	comma-delimited list of items to open. The default setting is
+	<font size="2" face="Courier New"><b>TR</b></font><font size="2" face="Courier New"><b>I.N</b></font>.</li>
+ <br><b>Note:</b> The comma (<b><font size="2" face="Courier New">,</font></b>) is a valid character for 
+	a RIC name. You must modify the application if any RIC names include a comma 
+	(<b><font face="Courier New" size="2">,</font></b>).
+ <li><b><font size="2" face="Courier New">mmt</font></b>: Sets the Message Model Type. 
+	By default, this is <font size="2" face="Courier New"><b>MARKET_PRICE</b></font>.</li>
+ <li><b><font size="2" face="Courier New">attribInfoInUpdates</font></b>: Sets 
+	the provider to send <b>OMMAttribInfo</b> with update and status messages. 
+	By default this is <font size="2" face="Courier New"><b>false</b></font>.</li>
+ <li><b><font size="2" face="Courier New">user</font></b>: Sets the DACS username for Login. 
+	By default, this is the value of&nbsp;the user.name system property.</li>
+ <li><b><font size="2" face="Courier New">position</font></b>: Sets the DACS position for Login. 
+	By default, this is the IP address/hostname.</li>
+ <li><b><font size="2" face="Courier New">application</font></b>: Sets the DACS application ID for Login. 
+	By default, this is <font size="2" face="Courier New"><b>256</b></font>.</li>
+ <li><b><font size="2" face="Courier New">rdmFieldDictionary</font></b>: Sets 
+	the RDM Field dictionary name and location.&nbsp;By default, this is <b>
+	<font size="2" face="Courier New">/var/triarch/RDMFieldDictionar</font><font size="2" face="Courier New">y</font></b>.</li>
+ <li><b><font size="2" face="Courier New">enumType</font></b>: Sets the enum 
+	dictionary name and location. By default, this is
+	<font size="2" face="Courier New"><b>/var/triarch/enumtype.def</b></font>.</li>
+ <li><b><font size="2" face="Courier New">runTime</font></b>: Sets the length in 
+	time (in seconds) the application runs before exiting. By default, this is 
+	<font size="2" face="Courier New"><b>600</b></font>.</li>
+</ul>
+
+<p>The example can be run as an application with the following commands:</p>
+<p><b><font size="2" face="Courier New">&nbsp;&nbsp;&nbsp; java com.reuters.rfa.example.omm.itemgroups.ItemGroupsDemo -itemName CSCO.O -serviceName DIRECT_FEED</font></b></p> 
+
+</body>
+

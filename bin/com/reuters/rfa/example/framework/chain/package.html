@@ -1,0 +1,16 @@
+<body>
+<p>Contains a framework for a consumer/subscriber chain data.
+It performs tasks that application needs to do 
+for consuming/subscribing and managing the segment chain data such as news story.</p>
+
+The chain sequence contains many segment data. Each segment contains the link to 
+the next one. To consume all of the chain data, application need to request the 
+first segment, find the next link and make request to the link. If there is no 
+link in a segment, this can indicate that it is the last segment.
+
+<p>
+This application uses the {@linkplain com.reuters.rfa.example.framework.sub framework.sub} 
+for context initialization and data consuming/subscription.
+</p>
+
+</body>

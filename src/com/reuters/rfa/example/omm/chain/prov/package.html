@@ -1,0 +1,528 @@
+<body>
+<p><b>StarterProviderInteractive_Chain</b> demonstrates how to implement an OMM chain interactive provider. 
+It is a GUI application implemented by JAVA Swing.
+<p>
+It requires a user to understand a <a href="../chain.html">chain data structure represented in Market Data</a> 
+and <a href="../symbollist.html">OMM format</a>.
+
+<p>
+StarterProviderInteractive_Chain supports two RDMs: MARKET_PRICE and SYMBOL_LIST models. It requires a user to provide 
+a full path to a file containing all underlying RICs (a RIC per line) of chain as a command line argument. 
+Please see a sample file, <a href="./chainRics">chainRics</a>, here. If the file path is not provided,
+the application will use the default <a href="./chainRics">chainRics</a> file.
+<p>
+After the 'Init' button is clicked, the application reads all underlying RICs from file and verifies each of them
+whether its length is less than or equal to 14 characters for LINK_A and 21 characters for LONGLINK template. 
+If all RICs are validated, RFA will get initialized, and the application will prepare for an item request by
+calculating a number of MARKET_PRICE &amp; SYMBOL_LIST response messages. It also generates a list of chain header 
+RICs and each of fid-value pairs for MARKET_PRICE model. The header RICs are created as <var><b>&lt;number&gt;#&lt;symbol&gt;</b></var>,
+where <b>&lt;symbol&gt;</b> is user specified value in 'Suffix Record' field. For example, if a user provides 
+ABC.O in 'Suffix Record', and a number of underlying RICs provided in file is 30, the application will create 
+3 chain header RICs as following.
+<p>
+<table border="1" cellspacing="0" cellpadding="5"  >
+	<tr align="center">
+		<td class="topic"><b>No.</b></td>
+		<td class="topic"><b>Chain Header RICs</b></td>
+		<td class="topic"><b>Element Members</b></td>
+	</tr>
+	<tr>
+		<td align="center">1</td>
+		<td align="center">0#ABC.O</td>
+		<td>1st - 14th underlying RICs</td>
+	</tr>  
+	<tr>
+		<td align="center">2</td>
+		<td align="center">1#ABC.O</td>
+		<td>15th - 28th underlying RICs</td>
+	</tr>  
+	<tr>
+		<td align="center">3</td>
+		<td align="center">2#ABC.O</td>
+		<td>29th - 30th underlying RICs</td>
+	</tr>  
+</table>
+<div class="image">Table 1 Chain Header RICs generated in MARKET_PRICE model</div>
+
+<p>
+However, in SYMBOL_LIST model, only 0#ABC.O is generated since all link fields could be set into one response
+message but multiple fragments. Please see the differences between chain in MARKET_PRICE and SYMBOL_LIST 
+<a href="../symbollist.html#difference">here</a>. 
+Then StarterProviderInteractive_Chain is now ready for listening to client.
+
+<p><img src="./main.png" />
+<div class="image">Figure 1 OMM Chain Interactive Provider Demo</div>
+
+<p>
+A consumer that needs to get the chain data must make a request to an item name corresponding to each model. 
+If the consumer tries to get 1#ABC.O in SYMBOL_LIST, it will get "A record could not be found" message. 
+
+<h2>Usage</h2>
+<p>
+To run, use:
+
+<p>
+<code>java com.reuters.rfa.example.omm.chain.prov.StarterProviderInteractive_Chain -provSession myNameSpace::RSSLProvSession 
+-serviceName PROVIDER -ricFile <var>&lt;path_to_RIC_list_file&gt;</var> -rdmFieldDictionary <var>&lt;path_to_RDMFieldDicationary&gt;</var> 
+-enumType <var>&lt;path_to_enumtype.def&gt;</var></code>
+
+<h3>Command Line Arguments</h3>
+<p>
+<ul>
+<li><b>-provSession</b> : name of provider session to acquire. Its connection list should include at least one RSSL_PROV connection.
+	The default is "myNamespace::provSession"</li>
+<li><b>-serviceName</b> : name of source. The default is "DIRECT_FEED"</li>
+<li><b>-ricFile</b> : name and location of a file containing a list of all underlying RICs. The default is "chainRics"</li>
+<li><b>-rdmFieldDictionary</b> : RDM Field dictionary name and location. The default is "/var/triarch/RDMFieldDictionary"</li>
+<li><b>-enumType</b> : RDM Enum dictionary name and location. The default is "/var/triarch/enumtype.def"</li>
+
+</ul>
+<h2>Implementation Overview</h2>
+<p>
+<var class="classname">StarterProviderInteractive_Chain</var> class is the main class that initializes RFA Context and 
+starts a main window, <var class="classname">ChainPubFrame</var>.
+
+<p>
+<var class="classname">ChainPubFrame</var> is implemented as an instance of <code>javax.swing.JFrame</code>. 
+It contains a 'Suffix Record' <code>javax.swing.JTextField</code> that requires a user to give a based RIC for 
+generating the chain header RIC. After clicking 'Init', <var class="classname">ChainPubFrame</var> 
+reads each underlying RIC from file and verifies its character length whether it is conformed to user selected 
+template (14 characters for LINK_A and 21 characters for LONGLINK template) or not. If there is an invalid one, 
+the user must fix the file content, re-specify the file path and click 'Init' again.
+
+<p>
+After verification is complete without defect, <var class="classname">ChainPubFrame</var> will acquire 
+a Session, create an <code>EventSource.OMM_PROVIDER</code> &amp; EventQueue, and create a <var class="classname">
+ProviderClients</var>, which implements <code>com.reuters.rfa.common.Client</code>. Then it generates the chain 
+header RICs and prepares fid-value for each chain header in MARKET_PRICE model. 
+
+<p>
+<var class="classname">ProviderClients</var> processes and responds upon request. Consumer must request an item in 
+appropriate model. For example, if ABC.O was provided in 'Suffix Record' text field,
+
+<p>
+<table border="1" cellspacing="0" cellpadding="5"  >
+	<tr align="center">
+		<td class="topic" colspan="2"><b>Request</b></td>
+		<td class="topic" colspan="1" rowspan="2"><b>Response</b></td>
+	</tr>
+	<tr align="center">
+		<td class="topic"><b>Item</b></td>
+		<td class="topic"><b>Model</b></td>
+	</tr>
+	<tr>
+		<td align="center">0#ABC.O</td>
+		<td align="center">MARKET_PRICE</td>
+		<td>Chain data in MARKET_PRICE</td>
+	</tr>  
+	<tr>
+		<td align="center">0#ABC.O</td>
+		<td align="center">SYMBOL_LIST</td>
+		<td>Chain data in SYMBOL_LIST</td>
+	</tr>  
+	<tr>
+		<td align="center">1#ABC.O</td>
+		<td align="center">MARKET_PRICE</td>
+		<td>If NEXT_LR/LONGNEXTLR of 0#ABC.O is not null,<br> then chain data in MARKET_PRICE will be received</td>
+	</tr>  
+	<tr>
+		<td align="center">1#ABC.O</td>
+		<td align="center">SYMBOL_LIST</td>
+		<td>"A record could not be found"</td>
+	</tr>  
+	<tr>
+		<td align="center">RIC that does NOT start with <var><b>&lt;number&gt;#</b></var>,<br> i.e. M.X, N.X</td>
+		<td align="center">MARKET_PRICE</td>
+		<td>Trade or quote data in MARKET_PRICE</td>
+	</tr>  
+	<tr>
+		<td align="center">RIC that does NOT start with <var><b>&lt;number&gt;#</b></var>,<br> i.e. M.X, N.X</td>
+		<td align="center">SYMBOL_LIST</td>
+		<td>"A record could not be found"</td>
+	</tr>  
+</table>
+<div class="image">Table 2 Sample Requests &amp; Responses</div>
+
+<p>
+<var class="classname">ProviderClients</var> will encode and respond with the OMM data in either MARKET_PRICE or 
+SYMBOL_LIST model depending on request. In case of normal quote MARKET_PRICE data, after  
+<var class="classname">ProviderClients</var> submits a refresh response, it will register a TimerIntSpec to receive
+repeating EVENT.TIMER_EVENT for sending updates every 2 seconds.
+
+<p>
+<var class="classname">ItemObj</var> is a class that contains all the relevant information regarding a MARKET_PRICE item.
+
+
+<h2>Examining Code</h2>
+<p>
+After 'Init' button is clicked, <var class="classname">ChainPubFrame</var> will read and verify each 
+underlying RIC from a file path provided in <code>-ricFile</code> argument. If the <code>-ricFile</code> 
+argument is not provided in run command, the sample file, <a href="./chainRics">chainRics</a>, 
+will be used. Here is how <var class="classname">ChainPubFrame</var> verifies each RIC.
+
+<p>
+<div class="examplecode">
+<pre>
+/**
+ * Verify whether the length of each chain member contained in file is compatible with designated template.  
+ */
+private boolean verifyRicList(int length)
+{
+    textArea.append("Verifying rics ...\n");
+    _ricList = new ArrayList<String>();
+    BufferedReader in;
+    try
+    {
+        in = new BufferedReader(new FileReader(_ricFile));
+        String str;
+        while ((str = in.readLine()) != null)
+        {
+            // Length of each underlying RIC must be less than or equal 14 for LINK_A and 21 for LONGLINK
+            if ( str.length() <= length)
+            { 
+                if ( str.indexOf('.') == -1)
+                    str = str + ".NaE";
+                _ricList.add(str);
+            }
+            else
+            {
+                textArea.append("RIC <" + str 
+                    + "> is longer than template standard. Please fix it and re-specify the file path\n");
+                _ricList.clear();
+                return false;
+            }
+        }
+        in.close();
+    }
+    catch (Exception e)
+    {
+       	textArea.append("Cannot open file. Please specify full path to underlying RICs list file \n");
+       	return false;
+    }
+
+    return true;
+}
+</pre></div>
+
+
+<br>
+<p>
+When verification is passed, <var class="classname">ChainPubFrame</var> starts initializing RFAJ, acquiring 
+a Session, creating an <code>EventSource.OMM_PROVIDER</code> &amp; EventQueue, creating &amp; registering a notification
+client (an inner <code>SessionClient</code> class) and creating a <var class="classname">
+ProviderClients</var>, which implements <code>com.reuters.rfa.common.Client</code>. 
+
+<p>
+Here is a dispatch loop defined in <code>notify()</code> call-out method, which will be invoked by RFA 
+just prior to calling the <code>processEvent()</code> method.
+
+<p>
+<div class="examplecode">
+<pre>
+class SessionClient implements DispatchableNotificationClient
+{
+    // Implementations of DispatchableNotificationClient::notify
+    public void notify(Dispatchable dispSource, Object closure)
+    {
+        java.awt.EventQueue.invokeLater( new Runnable() {
+            public void run()
+		{
+			try
+			{
+				do
+				{
+					int events = _eventQueue.dispatch(1000);
+				} 
+				while (_eventQueue.dispatch(0) > 0);
+			}
+			catch (DispatchException de)
+			{
+				System.out.println("Queue deactivated");
+            }
+			catch (Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+        });
+    }
+}
+</pre></div>
+
+
+<br>
+<p>
+<var class="classname">ProviderClients</var> initializes chain data by first calculating a number of chain 
+headers for representing in MARKET_PRICE model and a number of refresh response fragments for representing
+in SYMBOL_LIST model. It also prepares fid-value pairs of each MARKET_PRICE chain header RIC and puts into
+<code>(Hashmap)_chainRic</code>.
+
+<p>
+<div class="examplecode">
+<pre>
+/*
+ * To calculate a number of chain headers for chain in MARKET_PRICE model
+ * and a number of refresh response fragments for SYMBOL_LIST model. 
+ */
+protected void initChain( ArrayList<String> ricList, String tmp)
+{
+    _ricList = ricList;
+    _totalLinks = _ricList.size();
+    // For MARKET_PRICE
+    // Calculate a number of chain headers used
+    if ( tmp.equalsIgnoreCase("LINK_A"))
+        _templateLength = ChainPubFrame.LINK_A_SIZE;
+    else if ( tmp.equalsIgnoreCase("LONGLINK"))
+        _templateLength = ChainPubFrame.LONGLINK_SIZE;
+        
+    _headerNum = 1;
+    _lastRefCount = 0;
+    _refCount = 0;
+    _headerNum = _totalLinks / 14 + 1;
+    _lastRefCount = _totalLinks % 14;
+    	
+    String prevLR = null;
+    String nextLR = null;
+
+    // Prepare chain header RICs and their fid-value pairs
+    int ptr = 0;
+    for ( int j =0; j < _headerNum; j++)
+    {
+        String _tmpRic = j + "#" + _suffixRecord;
+        	
+        if ( j == _headerNum - 1)
+        {//Last page 
+            _refCount = _lastRefCount;
+            nextLR = null;
+            add2ChainList( _tmpRic, _refCount, prevLR, nextLR, ptr, _ricList.size()-1);
+        }
+        else
+        {
+            nextLR = (j+1) + "#" + _suffixRecord;
+            _refCount = 14;
+            add2ChainList( _tmpRic, _refCount, prevLR, nextLR, ptr, ptr+14+1);
+            ptr += 14;
+        }
+        prevLR = _tmpRic;
+    }
+
+    // For SYMBOL_LIST
+    // Calculate a number of refresh response message
+    _respNum = _totalLinks / _maxLinkCount + 1;
+}  
+</pre></div>
+
+
+<br>
+<p>
+<div class="examplecode">
+<pre>
+/*
+ * Add chain headers and their fid-value pairs into (Hashmap)_chainRic.
+ */
+private void add2ChainList(String ric, int ref, String prev, String next, int start, int end) 
+{
+    HashMap<Short, String> fidVal = new HashMap<Short, String>();
+    fidVal.put(new Short((short)239), ref+""); //REF_COUNT
+    fidVal.put(new Short((short)3), ""); //DSPLY_NAME
+    fidVal.put(new Short((short)2), "153"); //RDNDISPLAY
+    fidVal.put(new Short((short)1080), ""); //PREF_DISP
+    fidVal.put(new Short((short)1081), ""); //PREF_LINK
+		
+    if ( _templateLength == 14 )
+    {
+        fidVal.put(new Short((short)237), prev == null ? "" : prev ); //PREF_LR
+        fidVal.put(new Short((short)238), next == null ? "" : next ); //NEXT_LR
+			
+        for ( int k = 0; k < 14; k++ )
+        {
+            if ( k < end - start + 1)
+            {
+                fidVal.put(new Short((short)(240+k)), (String) _ricList.get(k+start)); //LINK_x
+            }
+            else
+                fidVal.put(new Short((short)(240+k)), "");
+        }
+    }
+    else if ( _templateLength == 21 )
+    {
+        fidVal.put(new Short((short)814), prev == null ? "" : prev ); //LONGPREVLR
+        fidVal.put(new Short((short)815), next == null ? "" : next ); //LONGNEXTLR
+
+        for ( int k = 0; k < 14; k++ )
+        {
+            if ( k < end - start + 1)
+            {
+                fidVal.put(new Short((short)(800+k)), (String) _ricList.get(k+start)); //LONGLINKx
+            }
+            else
+                fidVal.put(new Short((short)(800+k)), "");
+        }
+    }
+		
+    _chainRic.put( ric, fidVal);
+}
+</pre></div>
+
+
+<br>
+<p>
+When an item request is received, if its message model type is MARKET_PRICE, <code>processItemRequest()</code>
+of <var class="classname">ProviderClients</var> will first check whether the requested item name is one of 
+chain header RICs in <code>(Hashmap)_chainRic</code>. If so, it will get a nested <code>Hashmap</code>,
+which contains fid-value pairs of the requested item, from <code>(Hashmap)_chainRic</code> and encode 
+those fid-value pairs into a <code>FieldList</code>.
+
+<p>
+<div class="examplecode">
+<pre>
+if ( _chainRic.containsKey( itemName))
+{
+    // Encode chain in MARKET_PRICE
+    HashMap<Short, String> fidVal = (HashMap<Short, String>) _chainRic.get( itemName);
+    List<Short> keys = new ArrayList<Short>(fidVal.keySet());
+    Collections.sort(keys); //Sort fields
+    Iterator<Short> it = keys.iterator();
+
+    while ( it.hasNext())
+    {
+        Short fid = (Short)it.next();
+        // Encode UINT32 for RDNDISPLAY(2), REF_COUNT(239), PREF_DISP(1080) fields.
+        if ( fid.intValue() == 2 || fid.intValue() == 239 || fid.intValue() == 1080 )
+        {
+            String val = (String) fidVal.get(fid);
+            _encoder.encodeFieldEntryInit( fid, OMMTypes.UINT32);
+            if ( val.equals("") )
+                _encoder.encodeBlank();
+            else 
+                _encoder.encodeUInt32( new Long(val).longValue() );
+        }
+        else
+        {
+            // Encode String for link fields.
+            _encoder.encodeFieldEntryInit( fid, OMMTypes.ASCII_STRING);
+            _encoder.encodeString( (String) fidVal.get(fid), OMMTypes.ASCII_STRING);
+        }
+    }
+}
+</pre></div>
+
+
+<br>
+<p>
+If the requested item is not one of chain header RICs in <code>(Hashmap)_chainRic</code>, 
+<code>processItemEvent()</code> will encode data as an ordinary MARKET_PRICE data that does not
+consist of required fields for chain ric.
+<p>
+<div class="examplecode">
+<pre>
+else
+{
+    // For other RICs, we treat them as a ordinary MARKET_PRICE 
+	_encoder.encodeFieldEntryInit((short) 2, OMMTypes.UINT32); //RDNDISPLAY 
+	_encoder.encodeUInt32(100);
+	_encoder.encodeFieldEntryInit((short) 4, OMMTypes.ENUM); //RDN_EXCHID
+	_encoder.encodeEnum(155);
+	_encoder.encodeFieldEntryInit((short) 38, OMMTypes.DATE); //DIVPAYDATE
+	_encoder.encodeDate(2006, 12, 25);
+	_encoder.encodeFieldEntryInit((short) 6, OMMTypes.REAL32); //TRDPRC_1
+	double value = itemObj.getTradePrice1();
+	int intValue = Rounding.roundFloat2Int((float) value, OMMNumeric.EXPONENT_NEG4);
+	_encoder.encodeReal32(intValue, OMMNumeric.EXPONENT_NEG4);
+	_encoder.encodeFieldEntryInit((short) 22, OMMTypes.REAL32); //BID
+	value = itemObj.getBid();
+	intValue = Rounding.roundFloat2Int((float) value, OMMNumeric.EXPONENT_NEG4);
+	_encoder.encodeReal32(intValue, OMMNumeric.EXPONENT_NEG4);
+	_encoder.encodeFieldEntryInit((short) 25, OMMTypes.REAL32); //ASK
+	value = itemObj.getAsk();
+	intValue = Rounding.roundFloat2Int((float) value, OMMNumeric.EXPONENT_NEG4);
+	_encoder.encodeReal32(intValue, OMMNumeric.EXPONENT_NEG4);
+	_encoder.encodeFieldEntryInit((short) 32, OMMTypes.REAL64); //ACVOL_1
+	_encoder.encodeReal64(itemObj.getACVol1(), OMMNumeric.EXPONENT_0);
+	_encoder.encodeFieldEntryInit((short) 267, OMMTypes.TIME); //ASK_TIME
+	_encoder.encodeTime(19, 12, 23, 0);
+
+	_itemReqTable.put(rq, itemObj);
+}
+</pre></div>
+
+
+<br>
+<p>
+In case that an item request with SYMBOL_LIST message model type is received,  
+<code>processItemEvent()</code> will check if the requested item name is <var><b>0#&lt;symbol&gt;</b></var>,
+where &lt;symbol&gt; is the 'Suffix Record' user-specified in StarterProviderInteractive_Chain GUI, then it will encode 
+the refresh response message conforming to SymbolList model. The maximum number of links/symbols per refresh
+is limited by <var>_maxLinkCount</var> variable. For RDF-D, there could be up to 150 MapEntries per each refresh.
+In this example, the <var>_maxLinkCount</var> is 20. For other requested item name, StarterProviderInteractive_Chain 
+will send a response indicating that the item is not in cache and wil close the stream.
+<p>
+<div class="examplecode">
+<pre>
+//Encode SYMBOL_LIST
+if ( !itemName.equals("0#" + _suffixRecord))
+{
+	outmsg.setIndicationFlags(OMMMsg.Indication.REFRESH_COMPLETE);
+	outmsg.setRespTypeNum(OMMMsg.RespType.SOLICITED);
+	outmsg.setAttribInfo(msg.getAttribInfo());
+	outmsg.setState(OMMState.Stream.CLOSED, OMMState.Data.SUSPECT, OMMState.Code.NONE, "Not In Cache");
+	submitOMMCmd( outmsg, rq);
+} 
+else
+{ 
+	int ptr = 0;
+	for (int m = 0; m < _respNum; m++)
+	{
+		if ( m == _respNum-1) // Last fragment
+			outmsg.setIndicationFlags(OMMMsg.Indication.REFRESH_COMPLETE);
+
+		outmsg.setRespTypeNum(OMMMsg.RespType.SOLICITED);
+		outmsg.setAttribInfo(msg.getAttribInfo());
+		_encoder.initialize(OMMTypes.MSG, 1000);
+		_encoder.encodeMsgInit(outmsg, OMMTypes.NO_DATA, OMMTypes.MAP);
+
+		int flags = 0;
+		flags = OMMMap.HAS_DATA_DEFINITIONS
+				| OMMMap.HAS_PERMISSION_DATA_PER_ENTRY | OMMMap.HAS_TOTAL_COUNT_HINT;
+		// Map Header
+		_encoder.encodeMapInit(flags, OMMTypes.ASCII_STRING, OMMTypes.FIELD_LIST, 20, (short) 0);
+		// Data Definition of FieldList
+		_encoder.encodeDataDefsInit();
+		_encoder.encodeFieldListDefInit((short) 1); // Data Definition 1
+		_encoder.encodeFieldEntryDef((short) 3422, OMMTypes.RMTES_STRING); // PROV_SYMB
+		_encoder.encodeFieldEntryDef((short) 1, OMMTypes.INT32); // PROD_PERM
+		_encoder.encodeListDefComplete(); // End of Definition 1
+		_encoder.encodeDataDefsComplete(); // End of Data Definitions
+		// Map Entries
+		for ( int i = ptr; i < _maxLinkCount + ptr && i < _totalLinks; i++)
+		{
+			_encoder.encodeMapEntryInit(0, OMMMapEntry.Action.ADD, null);
+			// Key
+			_encoder.encodeString( (String)_ricList.get(i), OMMTypes.ASCII_STRING);
+			// Value
+			_encoder.encodeFieldListInit(OMMFieldList.HAS_DEFINED_DATA
+				| OMMFieldList.HAS_DATA_DEF_ID, (short) 0,
+				(short) 0, (short) 1);
+			// encode defined data for definition 1
+			_encoder.encodeString( (String)_ricList.get(i), OMMTypes.RMTES_STRING);
+			_encoder.encodeInt32(530);
+		}
+		ptr += _maxLinkCount;
+	
+		_encoder.encodeAggregateComplete(); // MAP
+		submitOMMCmd( (OMMMsg)_encoder.getEncodedObject(), rq);
+	}
+}
+</pre></div>
+
+   
+<p>
+<h2>Reference</h2>
+<p>
+<ul>
+	<li><a href="https://customers.reuters.com/developer/connect/data/material/GuideToRecordChains.pdf">Guide to Record Chains</a></li>
+	<li>RDM Usage Guide</li>
+</ul>
+<p> 
+
+</body>

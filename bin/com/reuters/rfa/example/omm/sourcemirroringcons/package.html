@@ -1,0 +1,50 @@
+<body>
+<p><b>StarterConsumer_SourceMirroring</b> subscribes to one or more items using RFA's Generic Subscription model. 
+
+<p><b>Package</b>: <b><font face="Courier New" size="2">com.reuters.rfa.example.omm.sourcemirroringcons</font></b></p>
+<p><b>Source code location</b>: <b>$RFA/Examples/com/reuters/rfa/example/omm/sourcemirroringcons</b></p>
+
+<p><b>StarterConsumer_SourceMirroring</b> provides examples of how to:
+
+<ul>
+  <li>Initialize and set command line options</li>
+  <li>Create a Session, EventQueue, Consumer Event Source, OMMEncoder, and OMMPool</li>
+   <li>Create LoginClient and DirectoryClient to handle Login / directory requests, responses, and generic messages.</li>&nbsp;  <li>Dispatch events from an EventQueue</li>&nbsp;  <li>Create 
+	<b>GenericItemManager</b> to handle the sending/receiving of generic item messages</li>  <li>Create Generic messages with Consumer Status Mode</li>  <li>Create Generic messages to start the generic message chain with provider</li>  <li>Cleanup a Session</li>
+</ul>
+
+<table border="0" width="100%" cellspacing="0" height="20">
+  <tr>
+    <td bgcolor="#0000AA" width="67%" height="18"><strong><a name="Running">
+	<font size="3" color="#FFFFFF">Running the
+      Example</font></a></strong></td>
+  </tr>
+</table>
+
+<p>This example uses the following command line parameters:
+
+<ul>
+  <li><b><font face="Courier New" size="2">debug</font></b>: Enables debug tracing. The default is
+    <b><font face="Courier New" size="2">false</font></b>.</li>
+  <li><b><font face="Courier New" size="2">session</font></b>: Sets the name of session to
+    acquire.&nbsp;The default is <font face="Courier New" size="2"><b>RSSLNamespace::localConsumerSession</b></font>.</li>
+  <li><b><font face="Courier New" size="2">user</font></b>: Sets the DACS username for login. The default is 
+	the value of the <b>user.name</b> system property.</li>
+  <li><b><font face="Courier New" size="2">position</font></b>: Sets the DACS position for login. The default is IP 
+	address/hostname.</li>
+  <li><b><font face="Courier New" size="2">application</font></b>: Sets the DACS application ID for login. The default is
+	<b><font face="Courier New" size="2">256</font></b>.</li>
+  <li><b><font face="Courier New" size="2">runTime</font></b>: Sets the duration (in seconds) for which the program runs 
+	before exiting. The default is <b><font face="Courier New" size="2">600</font></b>.</li>
+	<li><b><font face="Courier New" size="2">serviceName</font></b>: Specifies the service name from which to request 
+	messages/data. The default is <font face="Courier New" size="2"><b>DIRECT_FEED</b></font>.</li>
+	<li><b><font face="Courier New" size="2">sourceMirroringMode</font></b>: Sets the mode of this consumer. If this 
+	parameter is set to <b><font face="Courier New" size="2">-1</font></b> the feature is off; set it to one of the following values: 
+	<b><font face="Courier New" size="2">0</font></b>,<b><font face="Courier New" size="2">1</font></b>,<font face="Courier New" size="2"><b>2</b></font>.</li>
+</ul>
+
+<p>You can run this example as an application with the following command:</p>
+
+<p><b><font face="Courier New" size="2">&nbsp;&nbsp;&nbsp; java com.reuters.rfa.example.omm.sourcemirroringcons.StarterConsumer_SourceMirroring -sourceMirroringMode 0</font></b></p>
+
+</body>

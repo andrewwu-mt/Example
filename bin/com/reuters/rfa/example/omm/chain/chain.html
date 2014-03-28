@@ -1,0 +1,102 @@
+<body>
+<h1>Chain</h1>
+<h2>Introduction</h2>
+<p>
+Here is a brief explanation of chain in Market Data concept. Please refer to a 
+<a href="https://customers.reuters.com/developer/connect/data/material/GuideToRecordChains.pdf">
+Guide to Record Chains</a> for more detail on it.
+<p>
+Chain contains a list of records or symbols, which are of the same format. 
+For example, 0#.FTSE is a list of FTSE 100 indexes, 0#BD: is a list of future contracts of BRENDUBAI.
+The chain, or sometimes we call it chain header, can contain up to 14 underlying RICs. 
+If a number of underlying RICs is more than 14, the subsequent ones will be put in another chain header.
+Each chain header has a reference to the next and previous chain headers in series.
+<p>
+<img src="./chain_structure.png" width=90% height=90% />
+<p>
+Chain can be nested by chain.
+
+<h2>Chain RICs</h2>
+<p>
+Most of chain RICs have prefix as &#60;number&#62;#. The first chain header RIC is 0#&#60;symbol&#62; 
+where &#60;symbol&#62; is a base RIC which chain is related. The next chain header RIC has 
+an incremental numeric prefix by 1. The list of FTSE 100 indexes starts from 0#.FTSE
+to 7#.FTSE.
+<p>
+The first header of some chain RICs may omit "0#". 
+For example, the headers for the Active Volume leaders of NYSE are .AV.O and 1#.AV.O.
+
+Some may not apply these rules. For example, the page of cross rate RICs that have scaling factors is CROSS/SCALING.
+   
+<h2>Chain Templates</h2>
+<p>
+There are two types of chain templates: LINK_A and LONGLINK. Both are similar, but the length of 
+its link and next fields are different. LINK_A has a length of 14, while the link and next fields in LONGLINK have a length of 21.
+It means that underlying RICs in LONGLINK can be longer.
+<p>
+Both LINK_A and LONGLINK could not be published in the same chain.
+
+<h2>Fields</h2>
+<P>Three fields that are required in all templates are REF_COUNT, Link fields, and Next fields.
+<h3>(1) REF_COUNT</h3>
+REF_COUNT field specifies how many elements are listed in that header. It can be any integer from 0 to 14.
+
+<h3>(2) Link fields</h3>
+Link fields contain a separate value for chain element, typically a RIC. For LINK_A templates, LINK_1 through LINK_14
+are used, while for LONGLINK template, LONGLINK1 through LONGLINK14 are used.
+
+<h3>(3) Next fields</h3>
+PREF_LINK field is in both LINK_A and LONGLINK template. NEXT_LR is in LINK_A, and LONGNEXTLR is in LONGLINK template.
+All three of them is used to identify a RIC for the next chain header. If the next fields are empty, 
+it indicates the end of chain. The reason of having three different next fields is an incompatibility between
+various chain implementations and specifications. Chain publisher should ensure that the chain header contains
+the same value in PREF_LINK and NEXT_LR(or LONGNEXTLR)
+
+<h3>(4) Previous fields</h3>
+PREV_LR and LONGPREVLR provide back pointers for stepping through a chain in reverse order.
+
+<p>
+Here is a sample data of FTSE 100 Indexes
+<p>
+<div class="examplecode">
+<pre>
+Received MARKET_DATA_ITEM_EVENT (data), service = API_RDF, dataFormat = 2, msgType = IMAGE, item = 0#.FTSE,
+ status = { state: OK, code: NONE, text: "NONE"}, datasize = 386
+ PROD_PERM: 3648
+ RDNDISPLAY: 205
+ DSPLY_NAME: FTSE 100 INDEX  
+ RDN_EXCHID: 64 (LSE)
+ TIMACT:   :  
+ CURRENCY: 826 (GBP)
+ ACTIV_DATE: 09 FEB 2002
+ PREV_LR: 
+ NEXT_LR: 1#.FTSE
+ REF_COUNT: 14
+ LINK_1: .FTSE
+ LINK_2: .AD.FTSE
+ LINK_3: AAL.L
+ LINK_4: BSY.L
+ LINK_5: III.L
+ LINK_6: PFC.L
+ LINK_7: SHP.L
+ LINK_8: ABF.L
+ LINK_9: BT.L
+ LINK_10: IMT.L
+ LINK_11: PRU.L
+ LINK_12: SL.L
+ LINK_13: ADML.L
+ LINK_14: CCL.L
+ RECORDTYPE: 120
+ BCAST_REF: 
+</pre>
+</div>
+
+<p>
+<a href="./symbollist.html"> Next &#62; Chain in OMM Format</a>
+<h2>Reference</h2>
+<a href="https://customers.reuters.com/developer/connect/data/material/GuideToRecordChains.pdf">
+Guide to Record Chains</a>.
+<p>
+
+
+</body>

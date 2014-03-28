@@ -1,0 +1,46 @@
+<body>
+The <b>StarterConsumer_SymbolList</b> program demonstrates the use of RFA Java OMM in subscribing to 
+a <b>SYMBOL_LIST</b> and then making non-streaming requests for all of the items in the 
+<b>SYMBOL_LIST</b>.  The items in the <b>SYMBOL_LIST</b> can be requested in any 
+of the following message model types:
+  <b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_PRICE MARKET_PRICE}</font></b>, 
+  <b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_BY_ORDER MARKET_BY_ORDER}</font></b>, 
+  <b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_BY_PRICE MARKET_BY_PRICE}</font></b>, 
+  <b><font size="2" face="Courier New">{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_MAKER MARKET_MAKER}</font></b>, 
+  <font size="2" face="Courier New"><b>{@linkplain com.reuters.rfa.rdm.RDMMsgTypes#SYMBOL_LIST SYMBOL_LIST}</b></font>.<p>
+This program uses the utility object <b>SubAppContext</b> for context initialization.
+</p>
+
+<p>
+This example uses the following command line configuration parameters:
+<ul>
+<li><b><font size="2" face="Courier New">help</font></b>: Displays this message on screen.  
+The default is <font size="2" face="Courier New"><b>false</b></font>.
+<li><b><font size="2" face="Courier New">session</font></b>: Sets the consumer session. 
+The default is <font size="2" face="Courier New"><b>myNamespace::mySession</b></font>.<li><b>
+<font size="2" face="Courier New">serviceName</font></b>: Sets the service name for the SrcDirectory response. 
+<li><b><font size="2" face="Courier New">itemName</font></b>: Sets the item name for consumer requests. 
+The default is <font size="2" face="Courier New"><b>0#ARCA</b></font>.<li><b>
+<font size="2" face="Courier New">debug</font></b>: Sets the application to print out debug messages. 
+The default is <font size="2" face="Courier New"><b>false</b></font>.<li><b>
+<font size="2" face="Courier New">runTime</font></b>: Sets the length of time 
+(in seconds) for which the application runs before exiting. The default is
+<font size="2" face="Courier New"><b>-1</b></font>.
+<li><b><font size="2" face="Courier New">mmt</font></b>: Sets the message model 
+type string. The default is <font size="2" face="Courier New"><b>MARKET_PRICE</b></font>.<li>
+<b><font size="2" face="Courier New">type</font></b>: Sets the type of 
+subscriber connection. It can be either <font size="2" face="Courier New"><b>OMM</b></font> 
+or <font size="2" face="Courier New"><b>MarketData</b></font>. For this example, 
+it must be <font size="2" face="Courier New"><b>OMM</b></font> (which is its 
+default setting).&nbsp; </ul>
+</p>
+
+<p>You can run the <b>StarterConsumer_SymbolList</b> using the command:</p>
+<p>
+<b><font size="2" face="Courier New">&nbsp;&nbsp;&nbsp;
+java com.reuters.rfa.example.omm.symbollist.StarterConsumer_SymbolList -itemName 0#ARCA -serviceName DF_ARCA
+</font></b>
+</p>
+
+@see com.reuters.rfa.example.framework.sub.SubAppContext
+</body>

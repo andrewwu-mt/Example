@@ -1,0 +1,60 @@
+<body>
+<p>
+StarterConsumer_Perf  demonstrates basic principles of RFA Java development using OMM.
+It is written to show a simple way of developing a consumer type application
+which is focused on performance. More elaborate and or specialized applications
+may be written based on this example.
+</p>
+<p>
+For simplicity reasons this application does a limited error checking during
+initialization and exit time.
+</p>
+<p>
+This application handles only the Level 1 streaming data, MarketPrice domain. It 
+requests a number of items, all streaming level 1 data.
+</p>
+<p>
+It shows a simple way of requesting, consuming and displaying Level 1 data as well as
+it provides statistics showing an approximate image and update rates that it is able
+to handle. This application does not measure latency of any item.
+</p>
+<p>
+This application allows for configuration of session name, usage of event queue,
+time interval between stats displays, etc.
+</p>
+<p>
+Basic behavior of this application is as follows:
+<ol>
+<li>Initialize application's and RFA's specific components
+<li>Register timer event to display statistics at displayInterval
+<li>Request login
+<li>Wait for successful login response
+<li>Request items
+<li>Handle incoming Level 1 data either in RFA session thread (if nullEQ is true) or in application's Dispatcher thread
+	<ul>
+	    <li>Decode and display all items if printData flag is set
+	   	<li>Store statistics information for refresh,updates and status messages. Other type of messages are ignored.
+	</ul>
+<li>Depending on the configuration display incoming data statistic and / or content
+<li>Exit after specified run time
+</ol>
+<p><b>The OMMSimpleConsumerPerf application currently supports the following command line parameters.</b></p>
+<ul>
+ <li><b>runTime</b>-			Run time of the test application.  Defaults to 600 secs.</li>
+ <li><b>session</b>-			Consumer session.  Defaults to myNamespace::mySession</li>
+ <li><b>serviceName</b>-		Service name to request. Defaults to DIRECT_FEED</li>
+ <li><b>itemName</b>- 			List of items to open separated by ','. Defaults to TRI.N</li>
+ <li><b>nullEQ</b>-           	Test with null EventQueue. Defaults to false</li>
+ <li><b>rdmFieldDictionary</b>-	RDMField dictionary name and location.  Defaults to /var/rdm/RDMFieldDictionary</li>
+ <li><b>enumType</b>-			RDMEnum dictionary name and location.  Defaults to /var/rdm/enumtype.def</li>
+ <li><b>displayInterval</b>-	Throughput display rate (in seconds). Defaults to 5</li> 
+ <li><b>printData</b>-			Flag to print update response</li>
+ <li><b>printStatistics</b>-	Flag to print statistics</li>
+</ul>
+<p><b>The example can be run as an application with the following commands:</b></p>
+<p>java com.reuters.rfa.example.omm.consPerf.StarterConsumer_Perf -serviceName DIRECT_FEED -itemName "A.ARC" -session RSSLNamespace::localConsumerSession -runTime 600 -nullEQ false -displayInterval 5 -printData false </p>
+ 
+<p>
+Application exits itself after specified run time
+</p>
+</body>

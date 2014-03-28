@@ -1,0 +1,89 @@
+***************************************************************
+* Input file containing items to be posted;
+* Configuration is specified as tag=value pairs 
+***************************************************************
+* Tag Description: 
+*********************
+* name		: Item Name to be used with Post  e.g. IBM.N
+*
+* service	: ServiceName or ServiceID to be used with Post  e.g. DIRECT_FEED, 1;
+*				If numeric e.g. 1, this is a serviceID; 
+*				If string e.g. DIRECT_FEED, this is a serviceName
+* 
+* type		: Posting Type;  OnStream / OffStream  e.g. OnStream
+*				-> OnStream	- Item Stream 
+*				-> OffStream - Login Stream
+*  
+* part		: Part Type; single / multi_first / multi_middle / multi_last  e.g. multi_first
+*				-> single -  single part message
+*				-> multi_first - first part of multi-part message 
+*				-> multi_middle - middle part of multi-part message 
+*				-> multi_last - last part of multi-part message
+* 
+* sequence	: Boolean value/Numeric to set Sequence No. on the post message; true / false / 78 e.g. 78 
+*				-> true - auto mode; set sequence no on the message & increment it for the next post; 
+*				-> false - do not set sequence no. on the message
+*				-> number - use this sequence number
+*
+* id		: Boolean value/Numeric to set Post Id on the post message; true / false / 23 e.g. true 
+*				-> true - auto mode; set post id on the message & increment it for the next post; 
+*				-> false - do not set post id on the message
+*				-> number - use this postId
+*
+* pe        : Use Refresh Lock/Comma separated list of PE codes e.g. 6567,56. This will be converted to DACS lock   
+*              -> useRefreshLock ( valid only for on stream posting )
+*              -> 6567 ( The serviceID must be set to generate DACS lock )
+*              -> 6567,451 ( The serviceID must be set to generate DACS lock )
+*
+* ack		: Boolean value to set ack flag on the post message; true / false e.g. true 
+*				-> true - set ack flag on the message
+*				-> false - do not ack flag on the message
+*
+* userRightsMask: User Rights to be set on the post;  Values can be combined using the | operator
+*             e.g. create, delete, delete | modifyperm
+*               -> 0 - The user has no rights to create, delete or modify perm
+*				-> create - Sets the flag OMMMsg.UserRights.CreateFlag
+*				-> delete - Sets the flag OMMMsg.UserRights.DeleteFlag
+*				-> modifyperm - Sets the flag OMMMsg.UserRights.ModifyPermissionDataFlag
+*
+* attrib	: Attrib Type; attribInfo / attribInfoAttrib / none e.g. attribInfo 
+*				-> attribInfo - encode attrib info alone on the post message; there are no extended attributes 
+*				-> attribInfoAttrib - encode attrib info AND extended attributes on the post message
+*				-> none - do not encode attributes; not applicable for offStream posting
+*
+* payload	: Payload type of the post message; none / data / update_msg / status_msg / refresh_msg e.g. data 
+*				-> none - Post Message contains no payload 
+*				-> data - Post Message contains payload  of type OMMData 
+*				-> update_msg - Post message payload is an update message
+*				-> refresh_msg - Post message payload is an refresh message
+*				-> status_msg - Post message payload is an status message
+*
+* payloadMsgAttrib	: Attrib type of payload OMMMsg; attribInfo / attribInfoAttrib / none e.g. attribInfo;
+*				  Only applicable if payload is an OMMMsg i.e update_msg / refresh_msg / status_msg		 
+*				-> attribInfo - encode attrib info alone on the post message; there are no extended attributes 
+*				-> attribInfoAttrib - encode attrib info AND extended attributes on the post message
+*				-> none - do not encode attributes
+*
+* payloadMsgPayload	: Payload type of the PayloadOMMMsg; none / data e.g. data 
+*				  Only applicable if payload is an OMMMsg i.e update_msg / refresh_msg / status_msg		 
+*				-> none - Post Message contains no payload 
+*				-> data - Post Message contains payload  of type OMMData 
+*
+* Example: 
+*********************
+* name=A.ARC type=onstream service=1 ack=true id=true sequence=true part=single attrib=attribInfo payload=data
+* name=A.ARC type=onstream service=DIRECT_FEED ack=true id=true sequence=true part=single attrib=attribInfo payload=none
+* name=A.ARC type=offstream service=1 ack=true part=multi_first id=true sequence=true attrib=attribInfo payload=refresh_msg payloadMsgAttrib=none
+* name=IBM.N type=offstream service=1 ack=true part=single id=true sequence=true attrib=attribInfoAttrib payload=refresh_msg payloadMsgAttrib=none payloadMsgPayload=none
+*
+* Comment: 
+*********************
+* Lines starting with # are treated as comments
+*
+*************************************************************************************************************
+
+
+name=IBM.N service=1 pe=417,675 userRightsMask=modifyPerm type=onstream part=single id=true sequence=true ack=true payload=none 
+name=IBM.N service=1 pe=417 userRightsMask=create type=onstream part=single id=true sequence=true ack=true payload=none
+name=IBM.N service=1 pe=56 userRightsMask=create type=onstream part=single id=true sequence=true ack=true payload=none
+

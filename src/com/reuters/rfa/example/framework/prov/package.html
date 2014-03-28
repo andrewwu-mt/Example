@@ -1,0 +1,42 @@
+<body>
+	<p>Contains a framework for a publisher application. PubAppContext is the main component of this framework. 
+	It performs tasks that most publisher needs to do before it can public data.</p>  
+    <p>This package contain ProvDomainMgr that used for creating specific domain manager 
+    to publish OMM data with this publisher framework.
+    
+    </p>
+	<b>Configurable parameters are :</b>
+	<ul>
+		<li>
+		<b>debug</b> - enable debug tracing. The default is false.
+		</li>
+		<li>
+		<b>provSession</b> - session name to use. The default is "myNamespace::provSession".
+		</li>
+		</li>
+		<b>rdmFieldDictionary</b> - RDMFieldDictionary path and filename. The default is "/var/triarch/RDMFieldDictionary".
+		</li>
+		<li>
+		<b>enumType</b> - enumtype.def filename. The default is "/var/triarch/enumtype.def".
+		</li>
+		<li>
+		<b>listenenerName</b> - listener name for the session. The default is "".
+		</li>
+		<li>
+		<b>acceptSessions</b> - accept all sessions. The default is true.
+		</li>
+		<li>
+		<b>vendor</b> - vendor name. The default is "RFAExample".
+		</li>		
+		<li>
+		<b>pubServiceName</b> - service name used by provider. The default is "MY_SERVICE".
+		</li>
+		<li>
+		<b>isSource</b> - is this original source of data. The default is false.
+		</li>		
+		<li>
+		<b>runTime</b> - how long the application should run before exiting (in seconds). The default is -1 (infinite).
+		</li>		
+	</ul>
+</body>
+

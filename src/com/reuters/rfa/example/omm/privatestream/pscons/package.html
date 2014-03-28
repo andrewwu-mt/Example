@@ -1,0 +1,52 @@
+<body>
+<p>StarterConsumer_PrivateStream demonstrates how to subscribe to Reuters Domain Model data using 
+RFA's OMM Consumer model and Private Stream.
+It can connect to an RFA StarterProvider_PrivateStream / P2PS / RDFD using RSSL connection. </p>
+<p> This application also demonstrates how to handle a switch from a Standard/Public request to Private Stream. 
+    This is where the provider application does not accept the stream as Standard/Public and suggests the stream to be 
+    Private, while it was requested as Standard/Public.
+    In our example, we use RES-DS.N (Restricted Data Set) market price item requests to show this feature.  
+    The Closed Redirect status with Private Stream flag set mechanism will be utilized for this.
+    This Redirect message will flow to the client consumer application.  The consumer client will then need to re-request
+	the same item but as a Private Stream. The Redirect message will contain the information for the client to re-request.
+</p>
+
+<b>StarterConsumer_PrivateStream application does the following:</b>
+<ul>
+  <li>Register for Login
+  <li>Handle Login response
+  <li>Request and handle a Directory
+  <li>Register/subscribe item(s) through RFA using a Private Stream and {@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_PRICE MARKET_PRICE} message model.
+  <li>Register/subscribe 1 non-restricted item (IBM.N) using a Standard Stream and {@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_PRICE MARKET_PRICE} message model.
+  <li>Register/subscribe 1 restricted item (RES-DS.N) using a Standard Stream and {@linkplain com.reuters.rfa.rdm.RDMMsgTypes#MARKET_PRICE MARKET_PRICE} message model.
+  <li>Use {@link com.reuters.rfa.example.omm.privatestream.common.PSGenericOMMParser PSGenericOMMParser} to parse {@link com.reuters.rfa.omm.OMMMsg OMMMsg}
+</ul>
+
+<p><b>The StarterConsumer_PrivateStream application currently supports the following command line arguments.</b></p>
+<ul>
+  <li><b>debug</b> - enable detailed logging for RFA (default is &quot;false&quot;)</li>
+ <li><b>session</b> - name of consumer session to acquire.
+ Its connection list should include at least one RSSL connection.&nbsp; (default is &quot;myNamespace::mySession&quot;)</li>
+ <li><b>serviceName</b> - name of source directory to use. (default is &quot;DIRECT_FEED&quot;)</li>
+ <li><b>itemName</b> - List of items to open separated by ','. (default is &quot;TRI.N&quot;) 
+ <b>Please note that ',' is a valid character for RIC name. The application need to be modified if RIC names have ','.</b></li>
+ <li><b>attribInfoInUpdates</b> - Ask provider to send OMMAttribInfo with update and status messages (default is &quot;false&quot;)</li>
+ <li><b>user</b>  - DACS username for Login (default is value of&nbsp; user.name system property)</li>
+ <li><b>position</b> - DACS position for login for Login (default is IP address/hostname)</li>
+ <li><b>application</b> - DACS application ID for Login (default is &quot;256&quot;)</li>
+ <li><b>rdmFieldDictionary</b> - RDM Field dictionary name and location.&nbsp
+(default is &quot;/var/RDM/RDMFieldDictionary&quot;)</li>
+ <li><b>enumType</b> - Enum dictionary name and location.&nbsp
+  (default is &quot;/var/RDM/enumtype.def&quot;)</li>
+ <li><b>runTime</b> - How long (in seconds) application should run before exiting
+  (default is &quot;600&quot;)</li>
+</ul>
+
+<p><b>The example can be run as an application with the following commands:</b></p>
+<p>java com.reuters.rfa.example.omm.privatestream.pscons.StarterConsumer_PrivateStream 
+-itemName CSCO.O -serviceName DIRECT_FEED</p>
+ 
+<p>Note: An OMM PrivateStream consumer application must make a request for an RDM Directory. The user needs to 
+know a service name that is available and up before sending a Private Stream request</p>
+</body>
+

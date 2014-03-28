@@ -1,0 +1,49 @@
+<body>
+<p>
+The purpose of this applet example is to demonstrate how RFA Java can be used as an applet application.
+An applet example for consumer side is {@linkplain com.reuters.rfa.example.omm.gui.quotelist QuoteList}
+</P>
+
+<img src="{@docRoot}/../../portal/images/quotelistApplet.jpg">
+
+<p><b>
+Before running the applet, the environment needs to be set up and 
+source codes need to be complied and packaged to Jar as follows:
+</b></p>
+<p><b>Setting up environment:</b><br>
+Running an applet in a browser requires the Java(TM) Plug-in, which is installed by default with the JDK and JRE.
+
+In order to run RFA Java on an applet environment, following security permissions need to be enabled in the applet runtime<br>
+<ul>
+ <li>permission java.util.PropertyPermission "com.reuters.rfa.validPackages", "read";</li>
+ <li>permission java.lang.RuntimePermission "modifyThreadGroup";</li>
+ <li>permission java.lang.RuntimePermission "modifyThread";</li>
+ <li>permission java.util.logging.LoggingPermission "control";</li>
+ <li>permission java.io.FilePermission "&lt;log file name&gt;.lck", "write"; (for logging to file.)</li>
+ <li>permission java.io.FilePermission "&lt;log file name&gt;", "write"; (for logging to file.)</li>
+ <li>permission java.net.SocketPermission "&lt;ip address&gt;:&lt;port&gt;" , "connect";</li>
+ <li>permission java.net.SocketPermission "&lt;ip address&gt;:&lt;port&gt;" , "resolve";</li>
+</ul>
+However, instead of manually changing permission, the jar file of applet classes can be signed 
+in order to get full permission access.
+Please follow the section below to build the singed jar.
+</p>
+<p><b>Compiling and packaging source code and signing applet Jar files:</b><br>
+ &nbsp;1. Set up an appropriate JAVA_HOME environment variable.<br>
+ &nbsp;2. Run buildApplet.bat (for Windows) or buildApplet.ksh (for Unix and Linux) in 
+ <a href="{@docRoot}/../../../Examples/applet/">/Examples/applet folder</a>.<br>
+ The script will build a jar file (rfaj_applet_example.jar) that contains the example classes.
+  After that the rfaj.jar and the example jar file will be signed.
+
+An applet_example.ks file is a keystore file (JKS format) which contains a key that is used to sign the jar files.<br>
+After running the script successfully, you will see rfaj_applet_example.jar and signed_rfa.jar 
+in the same path of the build script.
+</p>
+
+<p><b>Running QuoteList applet:</b><br>
+Open <a href="{@docRoot}/../../../Examples/applet/quotelist.html" target="_blank">quotelist.html</a>
+on the browser that installed java plug-in, accept the certification then the applet will appear.<br>
+More details see {@linkplain com.reuters.rfa.example.omm.gui.quotelist QuoteList}.
+</p>
+</body>
+

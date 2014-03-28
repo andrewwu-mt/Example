@@ -1,0 +1,173 @@
+<body>
+<h1>Chain in OMM Format</h1>
+<h2>Introduction</h2>
+<p>
+<a href="./chain.html">Chain</a> data could be represented in OMM format by using already defined Reuters Domain Models: 
+either MARKET_PRICE or SYMBOL_LIST.
+<p>
+With MARKET_PRICE model (mmt=6), the <a href="./chain.html">chain</a> data is very similar to <a href="./chain.html">chain</a>
+ in Market Data format, which its payload includes all required fields for each template (LINK_A or LONGLINK). However, 
+ it is much more convenient when using SYMBOL_LIST model (mmt=10).
+
+<h2>Symbol List vs Market Price</h2>
+<p>
+Instead of representing the list of FTSE 100 indexes in 8 chain RICs from 0#.FTSE to 7#.FTSE, we can put all 
+underlying RICs into one refresh response with multiple fragments. The last fragment is indicated by refresh complete flag.
+Payload of symbol list is a Map. Each MapEntry key is an ASCII String symbol, while MapEntry value can be empty
+or FieldList, which includes permission data and cross-reference information.
+<p>
+For RDF-Direct, each refresh contains up to 150 MapEntries. Each MapEntry‚ÇÖs value is a FieldList that contains 
+PROV_SYMB (3422) and PROD_PERM (1). Here is a sample.
+<p>
+<div class="examplecode">
+<pre>
+MESSAGE
+	Msg Type: MsgType.REFRESH_RESP
+	Msg Model Type: SYMBOL_LIST
+	Indication Flags: CLEAR_CACHE
+	Hint Flags: HAS_ATTRIB_INFO | HAS_ITEM_GROUP | HAS_QOS | HAS_RESP_TYPE_NUM | HAS_STATE
+	State: OPEN, OK, NONE,  ""
+	Qos: (RT, TbT)
+	Group: 00021e6200a20892
+	RespTypeNum: 0(REFRESH_SOLICITED)
+	AttribInfo
+		ServiceName: DF_ECN
+		Name: 0#ISLA
+	Payload: 5971 bytes
+		MAP
+			MAP_ENTRY (Action.ADD) : 
+			Key: 412e49534c | A.ISL
+			Value: 
+				FIELD_LIST
+					FIELD_ENTRY 3422/PROV_SYMB: A.ISL
+					FIELD_ENTRY 1/PROD_PERM: 530
+			MAP_ENTRY (Action.ADD) : 
+			Key: 41412e49534c | AA.ISL
+			Value: 
+				FIELD_LIST
+					FIELD_ENTRY 3422/PROV_SYMB: AA.ISL
+					FIELD_ENTRY 1/PROD_PERM: 530
+			MAP_ENTRY (Action.ADD) : 
+			Key: 4141412e49534c | AAA.ISL
+			Value: 
+				FIELD_LIST
+					FIELD_ENTRY 3422/PROV_SYMB: AAA.ISL
+					FIELD_ENTRY 1/PROD_PERM: 530
+			MAP_ENTRY (Action.ADD) : 
+			Key: 4141432e49534c | AAC.ISL
+			Value: 
+				FIELD_LIST
+					FIELD_ENTRY 3422/PROV_SYMB: AAC.ISL
+					FIELD_ENTRY 1/PROD_PERM: 530
+			...
+			...
+</pre>
+</div>
+<p>
+
+Comparing to chain data in MARKET_PRICE model, it looks very similar to Marketfeed data.
+
+<p>
+<div class="examplecode">
+<pre>
+MESSAGE
+	Msg Type: MsgType.REFRESH_RESP
+	Msg Model Type: MARKET_PRICE
+	Indication Flags: REFRESH_COMPLETE | CLEAR_CACHE
+	Hint Flags: HAS_ATTRIB_INFO | HAS_ITEM_GROUP | HAS_PERMISSION_DATA | HAS_QOS | HAS_RESP_TYPE_NUM | HAS_STATE
+	State: OPEN, OK, NONE,  ""
+	Qos: (RT, TbT)
+	Group: 0001054d01e97676
+	PermissionData: 03054d3648c0	RespTypeNum: 0(REFRESH_SOLICITED)
+	AttribInfo
+		ServiceName: API_RDF
+		Name: 0#.FTSE
+		NameType: 1 (RIC)
+	Payload: 235 bytes
+		FIELD_LIST
+			FIELD_ENTRY 1/PROD_PERM: 3648
+			FIELD_ENTRY 2/RDNDISPLAY: 205
+			FIELD_ENTRY 3/DSPLY_NAME: FTSE 100 INDEX  
+			FIELD_ENTRY 4/RDN_EXCHID: LSE (64)
+			FIELD_ENTRY 5/TIMACT: 
+			FIELD_ENTRY 15/CURRENCY: GBP (826)
+			FIELD_ENTRY 17/ACTIV_DATE: 09 FEB 2002
+			FIELD_ENTRY 237/PREV_LR: 
+			FIELD_ENTRY 238/NEXT_LR: 1#.FTSE
+			FIELD_ENTRY 239/REF_COUNT: 14
+			FIELD_ENTRY 240/LINK_1: .FTSE
+			FIELD_ENTRY 241/LINK_2: .AD.FTSE
+			FIELD_ENTRY 242/LINK_3: AAL.L
+			FIELD_ENTRY 243/LINK_4: BSY.L
+			FIELD_ENTRY 244/LINK_5: III.L
+			FIELD_ENTRY 245/LINK_6: PFC.L
+			FIELD_ENTRY 246/LINK_7: SHP.L
+			FIELD_ENTRY 247/LINK_8: ABF.L
+			FIELD_ENTRY 248/LINK_9: BT.L
+			FIELD_ENTRY 249/LINK_10: IMT.L
+			FIELD_ENTRY 250/LINK_11: PRU.L
+			FIELD_ENTRY 251/LINK_12: SL.L
+			FIELD_ENTRY 252/LINK_13: ADML.L
+			FIELD_ENTRY 253/LINK_14: CCL.L
+			FIELD_ENTRY 259/RECORDTYPE: 120
+			FIELD_ENTRY 728/BCAST_REF: 
+			FIELD_ENTRY 1080/PREF_DISP: 0
+			FIELD_ENTRY 1081/PREF_LINK: 1#.FTSE
+			FIELD_ENTRY 1352/DSPLY_NMLL: 
+			FIELD_ENTRY 1383/DSO_ID: 19968
+			FIELD_ENTRY 1487/SEG_FORW17: 
+			FIELD_ENTRY 1488/SEG_BACK17: 
+			FIELD_ENTRY 1709/RDN_EXCHD2: LSE (64)
+			FIELD_ENTRY 2130/INSTU_NAME:       (0)
+			FIELD_ENTRY 2132/TILE_DESC:        (0)
+			FIELD_ENTRY 2320/ALIAS: 
+</pre>
+</div>
+
+<h2>Summary</h2>
+<p>
+<a name="difference">Differences between chain represented by MARKET_PRICE and SYMBOL_LIST models</a>
+<p>
+<table border="1" cellpadding="5" cellspacing="0" frame="border">
+	<tr style="font-style: italic">
+		<td></td>
+		<td align="center" class="topic">MARKET_PRICE</td>
+		<td align="center" class="topic">SYMBOL_LIST</td>
+	</tr>
+	<tr>
+		<td class="topic">Data in payload</td>
+		<td>A list of field-value pairs, normally in a FieldList</td>
+		<td>A Map</td>
+	</tr>
+	<tr>
+		<td class="topic">Record template used</td>
+		<td>LINK_A or LONGLINK</td>
+		<td>None</td>
+	</tr>
+	<tr>
+		<td class="topic">A number of link fields per refresh</td>
+		<td>Not more than 14 links</td>
+		<td>Unlimited. (150 MapEntries for RDF-D Specification) It could be divided into multiple fragments of refresh response.</td>
+	</tr>
+	<tr>
+		<td class="topic">How to get more links that are not shown in the first part of refresh</td>
+		<td>Consumer must subscribe to a RIC value in NEXT_LR or LONGNEXTLR field to get 14 more links. 
+			Repeat this step if NEXT_LR or LONGNEXTLR is not null.</td>
+		<td>Once a chain subscription is made, multiple refresh fragments including all links will be sent out in a roll. 
+			The last fragment is indicated by refresh complete flag.</td>
+	</tr>
+	<tr>
+		<td style="background-color: silver">Required fields (in payload)</td>
+		<td>REF_COUNT, Link fields, and Next fields</td>
+		<td>None</td>
+	</tr>
+</table>
+
+<p>
+<a href="./chain.html">Chain &#60; Previous</a>&nbsp;&nbsp;&nbsp;
+
+<h2>Reference</h2>
+RDM Usage Guide
+<p>
+<p>
+</body>

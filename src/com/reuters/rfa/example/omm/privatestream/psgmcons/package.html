@@ -1,0 +1,33 @@
+<body>
+<p>StarterConsumer_PrivateStreamGenericMsg demonstrates how to subscribe to a 'custom' Domain Model using a Private Stream 
+to send and receive generic messages using RFA's OMM Consumer model. It can ONLY connect to the example 
+application StarterProvider_PrivateStreamGenericMsg {@link com.reuters.rfa.example.omm.privatestream.psgmprov.StarterProvider_PrivateStreamGenericMsg StarterProvider_PrivateStreamGenericMsg}. 
+  </p>
+
+<b>This application does the following:</b>
+<ul>
+  <li>Register for Login
+  <li>Handle Login response
+  <li>Request and handle a Directory
+  <li>Register/subscribe one item through RFA using a Private Stream
+  <li>Initialize and continue a synchronous bidirectional conversation using generic messages with the example application PrivateStrmGenMsgProvDemo.
+  <li>Use {@link com.reuters.rfa.example.utility.GenericOMMParser GenericOMMParser} to parse {@link com.reuters.rfa.omm.OMMMsg OMMMsg}
+</ul>
+
+<p><b>The PrivateStrmGenMsgConsDemo application currently supports the following command line arguments.</b></p>
+<ul>
+ <li><b>debug</b> - enable detailed logging for RFA (default is &quot;false&quot;)</li>
+ <li><b>session</b> - name of consumer session to acquire.
+ Its connection list should include  one RSSL connection to StarterProvider_PrivateStreamGenericMsg.&nbsp; (default is &quot;myNamespace::mySession&quot;)</li>
+ <li><b>user</b>  - DACS username for Login (default is value of&nbsp; user.name system property)</li>
+ <li><b>position</b> - DACS position for login for Login (default is IP address/hostname)</li>
+ <li><b>application</b> - DACS application ID for Login (default is &quot;256&quot;)</li>
+ <li><b>runTime</b> - How long (in seconds) application should run before exiting
+   (default is &quot;600&quot;)</li>
+  <li><b>messageInterval</b> - Time in seconds between each generic message exchange with responding peer (default is &quot;5&quot;)</li>
+</ul>
+
+<p><b>The example can be run as an application with the following commands:</b></p>
+<p>java com.reuters.rfa.example.omm.privatestream.psgmcons.StarterConsumer_PrivateStreamGenericMsg </p>
+ 
+</body>
