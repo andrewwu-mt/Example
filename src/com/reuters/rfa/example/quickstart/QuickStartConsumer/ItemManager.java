@@ -48,7 +48,7 @@ public class ItemManager implements Client
     {
         System.out.println(_className+".sendRequest: Sending item requests");
         String serviceName = _mainApp._serviceName;
-        String [] itemNames = {"2330.TW","EUR="};
+        String [] itemNames = {"2330.TW","EUR=","JPY=","AUD=","1301.TW","2308.TW","2881.TW","0006.HK","0038.HK"};
         short msgModelType = RDMMsgTypes.MARKET_PRICE;
 
         OMMItemIntSpec ommItemIntSpec = new OMMItemIntSpec();
